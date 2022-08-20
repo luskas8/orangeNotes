@@ -1,9 +1,10 @@
 import { ChakraProvider } from "@chakra-ui/react"
+import { Platform } from "./layouts/Platform"
 
 function App() {
   return (
     <ChakraProvider>
-      <h1>Hello World!</h1>
+      <Platform />
     </ChakraProvider>
   )
 }
