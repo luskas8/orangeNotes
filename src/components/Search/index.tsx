@@ -1,7 +1,11 @@
-import { border, Box, Flex, Input } from "@chakra-ui/react";
+import { Box, Flex, Input } from "@chakra-ui/react";
 import { BiSearch } from "react-icons/bi";
 
-export const Search = () => {
+interface SearchProps {
+    placeholderText: string;
+}
+
+export const Search = ({ placeholderText }: SearchProps) => {
     return (
         <label
             htmlFor="orangeNote-input--search"
@@ -31,7 +35,7 @@ export const Search = () => {
                         id="orangeNote-input--search"
                         padding={0}
                         color="white"
-                        placeholder="search notes"
+                        placeholder={placeholderText}
                         border="none"
                         bgColor="transparent"
                         _focusVisible={{}}

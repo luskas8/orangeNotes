@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { loadEnv } from 'vite';
 
-process.env = {...process.env, ...loadEnv(process.env.STAGE || "DEV", process.cwd())};
+process.env = {...process.env, ...loadEnv("", process.cwd())};
 
 // https://vitejs.dev/config/
 export default defineConfig({
