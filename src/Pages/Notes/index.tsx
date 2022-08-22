@@ -1,7 +1,13 @@
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
+import { Search } from "../../components";
 
 export const Notes = () => {
     const route = useLocation();
 
-    return <h1>{route.pathname}</h1>
+    return (
+        <>
+            <Search />
+            <h1>{route.pathname}</h1>
+        </>
+    )
 }
