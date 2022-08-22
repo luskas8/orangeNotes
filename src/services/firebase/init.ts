@@ -5,13 +5,13 @@ import { getAnalytics } from "firebase/analytics";
 export const initApp = () => {
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyCHmmvGRY1W9OiceCrDeUfhl2mqWQO5aDg",
-    authDomain: "orangenotes-f385e.firebaseapp.com",
-    projectId: "orangenotes-f385e",
-    storageBucket: "orangenotes-f385e.appspot.com",
-    messagingSenderId: "727164633964",
-    appId: "1:727164633964:web:6417f35686144f6c746949",
-    measurementId: "G-K0FDXJC440"
+    apiKey: import.meta.env.API_KEY,
+    authDomain: import.meta.env.AUTH_DOMAIN,
+    projectId: import.meta.env.PROJECT_ID,
+    storageBucket: import.meta.env.STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.MESSAGING_SENDER_ID,
+    appId: import.meta.env.APP_ID,
+    measurementId: import.meta.env.MEASUREMENT_ID,
   };
   
   // Initialize Firebase

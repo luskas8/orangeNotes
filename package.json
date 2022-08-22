@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env vite",
+    "dev": "cross-env STATE=DEV vite",
     "build": "cross-env tsc && vite build",
     "preview": "cross-env vite preview",
     "test": "vitest",
