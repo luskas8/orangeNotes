@@ -1,26 +1,20 @@
-import { ReactNode } from "react";
-import { CgCheckR, CgSandClock } from "react-icons/cg"
-import { FaRegStickyNote } from "react-icons/fa"
-import { authorization } from "../@types";
+import { CgCheckR, CgSandClock } from "react-icons/cg";
+import { FaRegStickyNote } from "react-icons/fa";
+import { NavItensProps } from "../@types";
 
-interface NavItensProps {
-    label: string;
-    icon: ReactNode;
-    authorization: authorization,
-}
 export const itens: Array<NavItensProps> = [
     {
-        label: "pomodoro",
+        itemLabel: "pomodoro",
         icon: <CgSandClock />,
         authorization: "guest",
     },
     {
-        label: "notes",
+        itemLabel: "notes",
         icon: <FaRegStickyNote />,
         authorization: "user",
     },
     {
-        label: "checklists",
+        itemLabel: "checklists",
         icon: <CgCheckR />,
         authorization: "user",
     }

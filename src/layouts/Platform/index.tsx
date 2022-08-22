@@ -1,8 +1,12 @@
-import { Box, useBreakpoint } from "@chakra-ui/react";
-import { Aside, Navbar } from "../../components";
+import { Box, useBreakpoint, useConst } from "@chakra-ui/react";
+import { v4 } from "uuid";
+import { Navbar, Sidebar } from "../../components";
+import { itens } from "../../config/navItens";
 
 export const Platform = () => {
     const breakpoint = useBreakpoint();
+    const navItens = useConst(itens);
+
     return (
         <Box
             bg="blackAlpha.700"
@@ -10,9 +14,9 @@ export const Platform = () => {
             h="100vh"
         >
             {breakpoint === "sm" || breakpoint === "base" ? (
-                <Navbar />
+                <Navbar key={v4()} navItens={navItens} />
             ) : (
-                <Aside />
+                <Sidebar key={v4()} navItens={navItens} />
             )}
         </Box>
     )
