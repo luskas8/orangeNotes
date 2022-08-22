@@ -13,3 +13,5 @@ export const Notes = () => {
         </>
     )
 }
+
+export * from "./New";

@@ -7,9 +7,13 @@ export const Router = () => {
         <Box width="100%" height="100%">
             <Routes>
                 {routes.map((route, index) => {
-                    return (
-                        <Route key={`route-${index}`} path={route.path} element={<route.component />}/>
-                    )
+                    return <Route key={route.path} path={route.path} element={<route.component />}>
+                        {
+                            route.routes?.map((subroute) => {
+                                return <Route key={subroute.path} path={subroute.path} element={<subroute.component />} />
+                            })
+                        }
+                    </Route>
                 })}
             </Routes>
         </Box>
