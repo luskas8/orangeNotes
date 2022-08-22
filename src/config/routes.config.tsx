@@ -9,6 +9,7 @@ export const routes: NavItensProps[] = [
     {
         path: "/",
         isExact: true,
+        redirect: "/pomodoro",
         component: () => <Pomodoro />,
         itemLabel: "Index",
         icon: <FaGlobeAmericas />,

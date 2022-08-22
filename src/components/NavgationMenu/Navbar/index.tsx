@@ -5,7 +5,7 @@ import { NavItem } from "../NavItem";
 
 export const Navbar = ({ navItens }: NavMenuProps) => {
     return (
-        <Box property="" w="100%" bg="blackAlpha.800" margin={0} padding={["1rem 1.25rem"]}>
+        <Box w="100%" margin={0} padding={["1rem 1.25rem"]}>
             <HStack padding={0} justifyContent={"center"} alignItems={"center"} gap={8}>
                 {navItens?.map((item) => {
                     return <NavItem key={v4()} {...item} />

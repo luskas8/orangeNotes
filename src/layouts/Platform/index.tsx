@@ -10,9 +10,9 @@ export const Platform = () => {
 
     return (
         <Box
-            bg="blackAlpha.700"
             w="100%"
             h="100vh"
+            bgColor="blackAlpha.900"
         >
             <Flex flex="1" direction={isMobile ? "column" : "row"}>
                 {isMobile ? (
