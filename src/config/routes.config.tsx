@@ -13,6 +13,7 @@ export const routes: NavItensProps[] = [
         itemLabel: "Index",
         icon: <FaGlobeAmericas />,
         authorization: "guest",
+        enables: ["navigationbar"],
     },
     {
         path: "/pomodoro",
