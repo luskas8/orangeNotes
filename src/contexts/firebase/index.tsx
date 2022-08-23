@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import getNotes from "../../services/firebase/getNotes";
 import { firestore } from "../../services/firebase/init";
+import snapshot from "../../services/firebase/onSnapshot";
 export interface Note {
     id: string;
     title: string;
@@ -21,26 +21,19 @@ const defaultValues: FirebaseContextProps = {
 export const FirebaseContext = createContext<FirebaseContextProps>(defaultValues);
 
 export const FirebaseProvider = ({ children }: FirebaseProps) => {
-    const notes = useNotes();
+    const [notes, updateNotes] = useState<Note[]>([])
+
+    useEffect(() => {
+        snapshot(firestore, updateNotes);
+    })
+
     return (
         <FirebaseContext.Provider
             value={{
-                notes
+                notes,
             }}
         >
             {children}
         </FirebaseContext.Provider>
     )
-}
-
-function useNotes() {
-    const [notes, updateNotes] = useState<Note[]>([]);
-
-    useEffect(() => {
-        (async function fetchNotes() {
-            updateNotes(await getNotes(firestore))
-        }())
-    })
-
-    return notes;
 }
