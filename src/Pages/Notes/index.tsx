@@ -1,4 +1,4 @@
-import { Box, Center, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, Wrap } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { NoteItem, Search } from "../../components";

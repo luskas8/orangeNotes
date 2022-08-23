@@ -5,6 +5,7 @@ export const NoteItem = (note: Note) => {
     return (
         <WrapItem flex={{ base: "1", md: "0" }} w={{ base: "100%" }} key={note.id}>
             <Box
+                cursor={"pointer"}
                 minW={"148px"}
                 as="article"
                 w={{ base: "100%", md: "230px" }}
