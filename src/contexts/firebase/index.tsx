@@ -10,7 +10,7 @@ export interface Note {
 interface FirebaseContextProps {
     notes: Note[];
 }
-interface FirebaseProps extends FirebaseContextProps {
+interface FirebaseProps {
     children: ReactNode;
 }
 
