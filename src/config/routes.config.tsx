@@ -1,15 +1,15 @@
-import { CgCheckR, CgSandClock } from "react-icons/cg";
-import { FaGlobeAmericas, FaRegStickyNote } from "react-icons/fa";
-import { NavItensProps } from "@types";
-import { Tasks } from "@pages/Tasks";
 import { NewNote, Notes } from "@pages/Notes";
 import { Pomodoro } from "@pages/Pomodoro";
+import { Tasks } from "@pages/Tasks";
+import { NavItensProps } from "@types";
+import { CgCheckR, CgSandClock } from "react-icons/cg";
+import { FaGlobeAmericas, FaRegStickyNote } from "react-icons/fa";
 
 export const routes: NavItensProps[] = [
     {
         path: "/",
         isExact: true,
-        component: () => <Pomodoro />,
+        component: (props: NavItensProps) => <Pomodoro {...props}/>,
         itemLabel: "Index",
         icon: <FaGlobeAmericas />,
         authorization: "guest",
@@ -17,21 +17,23 @@ export const routes: NavItensProps[] = [
     },
     {
         path: "/pomodoro",
-        component: () => <Pomodoro />,
+        component: (props: NavItensProps) => <Pomodoro {...props}/>,
         itemLabel: "pomodoro",
         icon: <CgSandClock />,
         authorization: "guest",
+        enables: ["navigationbar"],
     },
     {
         path: "/notes",
-        component: () => <Notes />,
+        component: (props: NavItensProps) => <Notes {...props}/>,
         itemLabel: "notes",
         icon: <FaRegStickyNote />,
         authorization: "user",
+        enables: ["navigationbar"],
         routes: [
             {
                 path: "new",
-                component: () => <NewNote />,
+                component: (props: NavItensProps) => <NewNote {...props}/>,
                 itemLabel: "new note",
                 icon: <FaRegStickyNote />,
                 authorization: "user",
@@ -40,10 +42,11 @@ export const routes: NavItensProps[] = [
     },
     {
         path: "/tasks",
-        component: () => <Tasks />,
+        component: (props: NavItensProps) => <Tasks {...props}/>,
         itemLabel: "tasks",
         icon: <CgCheckR />,
         authorization: "user",
+        enables: ["navigationbar"],
     },
 
 ]

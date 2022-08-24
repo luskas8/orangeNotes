@@ -1,11 +1,12 @@
 import { Box, Button, Container, Wrap } from "@chakra-ui/react";
+import { NoteItem, Search } from "@components";
+import { useFirebase } from "@hooks";
+import { NavItensProps } from "@types";
 import { useTranslation } from "react-i18next";
 import { HiOutlinePlus } from "react-icons/hi";
 import { Outlet, useNavigate, useOutlet } from "react-router-dom";
-import { NoteItem, Search } from "@components";
-import { useFirebase } from "@hooks";
 
-export const Notes = () => {
+export const Notes = (props: NavItensProps) => {
     const { notes } = useFirebase();
     const { t } = useTranslation();
     const inChildRoute = useOutlet();

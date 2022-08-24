@@ -1,10 +1,11 @@
 import { Box, Button, Container } from "@chakra-ui/react";
+import { Search } from "@components";
+import { NavItensProps } from "@types";
 import { useTranslation } from "react-i18next";
 import { HiOutlinePlus } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
-import { Search } from "../../components";
 
-export const Tasks = () => {
+export const Tasks = (props: NavItensProps) => {
     const route = useLocation();
     const { t } = useTranslation();
 

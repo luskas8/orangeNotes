@@ -15,7 +15,7 @@ export const Router = () => {
 
 function createRoute(route: NavItensProps) {
     return (
-        <Route key={route.path} path={route.path} element={<route.component />}>
+        <Route key={route.path} path={route.path} element={<route.component {...route} />}>
             {route.routes?.map(createRoute)}
         </Route>
     )

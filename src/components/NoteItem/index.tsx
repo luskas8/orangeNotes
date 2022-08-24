@@ -1,6 +1,6 @@
 import { Box, WrapItem } from "@chakra-ui/react"
-import { Note } from "../../contexts"
-import { removeHTMLTags } from "../../utils/removeHTMLTags"
+import { Note } from "@contexts"
+import removeHTMLTags from "@utils/removeHTMLTags"
 
 export const NoteItem = (note: Note) => {
     return (

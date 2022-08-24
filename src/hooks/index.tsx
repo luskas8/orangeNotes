@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { BreakpointContext } from "@contexts/breakpoint";
 import { FirebaseContext } from "@contexts/firebase";
+import { NavigationContext } from "@contexts/navigation";
 
 export const useFirebase = () => {
     const context = useContext(FirebaseContext);
@@ -17,6 +18,16 @@ export const useBreakpoint = () => {
 
     if (!context) {
         throw "Breakpoint cannot be used, please try again later!";
+    }
+
+    return context;
+}
+
+export const useNavigation = () => {
+    const context = useContext(NavigationContext);
+
+    if (!context) {
+        throw "Navgation cannot be used, please try again later!";
     }
 
     return context;
