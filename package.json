@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env vite",
+    "dev:net": "cross-env vite --host",
     "build": "cross-env tsc && vite build",
     "preview": "cross-env vite preview",
     "test": "vitest",
