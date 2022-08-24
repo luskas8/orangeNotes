@@ -30,7 +30,7 @@ export const routes: NavItensProps[] = [
         authorization: "user",
         routes: [
             {
-                path: "/notes/new",
+                path: "new",
                 component: () => <NewNote />,
                 itemLabel: "new note",
                 icon: <FaRegStickyNote />,
@@ -39,9 +39,9 @@ export const routes: NavItensProps[] = [
         ]
     },
     {
-        path: "/checks",
+        path: "/tasks",
         component: () => <Tasks />,
-        itemLabel: "checks",
+        itemLabel: "tasks",
         icon: <CgCheckR />,
         authorization: "user",
     },

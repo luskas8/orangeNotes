@@ -1,20 +1,47 @@
-import { Box, Wrap } from "@chakra-ui/react";
+import { Box, Button, Container, Wrap } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { HiOutlinePlus } from "react-icons/hi";
+import { Outlet, useNavigate, useOutlet } from "react-router-dom";
 import { NoteItem, Search } from "../../components";
 import { useFirebase } from "../../hooks";
 
 export const Notes = () => {
     const { notes } = useFirebase();
-    const route = useLocation();
     const { t } = useTranslation();
+    const inChildRoute = useOutlet();
+    const navigatate = useNavigate();
+
+    function handleNewNote() {
+        navigatate("/notes/new");
+    }
+
+    if (inChildRoute) {
+        return <Outlet />
+    }
+
     return (
-        <Box width="100%" height="100%" color={"white"}>
+        <Container
+            position="relative"
+            maxWidth="100%"
+            width="100%"
+            height={{ base: "calc(100vh - 56px)", md: "100vh" }}
+        >
             <Search placeholderText={t('search_notes')} />
-            <Wrap padding="0 8px">
-                {notes.map(note => <NoteItem  key={note.id} {...note}/>)}
+            <Wrap color={"white"}>
+                {notes.map(note => <NoteItem key={note.id} {...note} />)}
             </Wrap>
-        </Box>
+            <Box
+                position="absolute"
+                boxSize={"56px"}
+                bottom="56px"
+                right="24px"
+                borderRadius="50px"
+            >
+                <Button onClick={handleNewNote} borderRadius="inherit" width="100%" height="100%">
+                    <HiOutlinePlus />
+                </Button>
+            </Box>
+        </Container>
     )
 }
 
