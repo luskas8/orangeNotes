@@ -1,9 +1,9 @@
 import { CgCheckR, CgSandClock } from "react-icons/cg";
 import { FaGlobeAmericas, FaRegStickyNote } from "react-icons/fa";
-import { NavItensProps } from "../@types";
-import { Tasks } from "../Pages/Tasks";
-import { NewNote, Notes } from "../Pages/Notes";
-import { Pomodoro } from "../Pages/Pomodoro";
+import { NavItensProps } from "@types";
+import { Tasks } from "@pages/Tasks";
+import { NewNote, Notes } from "@pages/Notes";
+import { Pomodoro } from "@pages/Pomodoro";
 
 export const routes: NavItensProps[] = [
     {

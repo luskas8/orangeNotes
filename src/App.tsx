@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { v4 } from "uuid";
-import { FirebaseProvider, BreakpointProvider } from "./contexts";
+import { FirebaseProvider, BreakpointProvider } from "@contexts";
 import { Platform } from "./layouts/Platform";
 import { theme } from "./theme";
 import './locates';

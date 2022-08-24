@@ -1,8 +1,8 @@
 import { Box, Flex, useConst } from "@chakra-ui/react";
 import { v4 } from "uuid";
-import { Navbar, Router, Sidebar } from "../../components";
-import { routes } from "../../config/routes.config";
-import { useBreakpoint } from "../../hooks";
+import { Navbar, Router, Sidebar } from "@components";
+import { routes } from "@config/routes.config";
+import { useBreakpoint } from "@hooks";
 
 export const Platform = () => {
     const navItens = useConst(routes);

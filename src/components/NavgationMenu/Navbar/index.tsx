@@ -1,6 +1,6 @@
 import { Box, HStack } from "@chakra-ui/react";
 import { v4 } from "uuid";
-import { NavMenuProps } from "../../../@types";
+import { NavMenuProps } from "@types";
 import { NavItem } from "../NavItem";
 
 export const Navbar = ({ navItens }: NavMenuProps) => {

@@ -2,8 +2,8 @@ import { Box, Button, Container, Wrap } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import { HiOutlinePlus } from "react-icons/hi";
 import { Outlet, useNavigate, useOutlet } from "react-router-dom";
-import { NoteItem, Search } from "../../components";
-import { useFirebase } from "../../hooks";
+import { NoteItem, Search } from "@components";
+import { useFirebase } from "@hooks";
 
 export const Notes = () => {
     const { notes } = useFirebase();

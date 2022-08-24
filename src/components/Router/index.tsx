@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
-import { NavItensProps } from "../../@types";
-import { routes } from "../../config/routes.config";
+import { NavItensProps } from "@types";
+import { routes } from "@config/routes.config";
 
 export const Router = () => {
     return (

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { firestore } from "../../services/firebase/init";
-import snapshot from "../../services/firebase/onSnapshot";
+import { firestore } from "@services";
+import snapshot from "@services/firebase/onSnapshot";
 export interface Note {
     id: string;
     title: string;

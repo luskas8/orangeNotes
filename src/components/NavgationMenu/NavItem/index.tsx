@@ -1,13 +1,13 @@
 import { Box } from "@chakra-ui/react"
-import { HTMLProps, useEffect } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { NavItensProps } from "@types"
+import { HTMLProps } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { v4 } from "uuid"
-import { NavItensProps } from "../../../@types"
 
 interface NavItemProps extends HTMLProps<HTMLDivElement>, NavItensProps {
 }
 
-export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavItemProps) => {    
+export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavItemProps) => {
     if (isExact) {
         return null;
     }

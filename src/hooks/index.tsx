@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { BreakpointContext } from "../contexts/breakpoint";
-import { FirebaseContext } from "../contexts/firebase";
+import { BreakpointContext } from "@contexts/breakpoint";
+import { FirebaseContext } from "@contexts/firebase";
 
 export const useFirebase = () => {
     const context = useContext(FirebaseContext);
