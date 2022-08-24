@@ -6,9 +6,9 @@ import { v4 } from "uuid";
 import { NavItem, NavItemProps } from "../NavItem";
 
 export const Navbar = ({ navItens }: NavMenuProps) => {
-    const { enableNavigationBar } = useNavigation();
+    const { disableNavigationBar } = useNavigation();
 
-    if (!enableNavigationBar) {
+    if (disableNavigationBar) {
         const fakeItem: NavItemProps = {
             authorization: "guest",
             component: () => {},
@@ -27,7 +27,7 @@ export const Navbar = ({ navItens }: NavMenuProps) => {
 
     return (
         <Box w="100%" margin={0} padding={["1rem 1.25rem"]}>
-            <HStack padding={0} justifyContent={"center"} alignItems={"center"} gap={8}>
+            <HStack padding={0} justifyContent={"center"} alignItems={"center"} gap="16">
                 {navItens?.map((item) => {
                     return <NavItem key={v4()} {...item} />
                 })}

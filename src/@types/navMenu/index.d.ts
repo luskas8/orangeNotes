@@ -2,7 +2,7 @@ import { HTMLProps, ReactNode } from "react";
 import { authorization } from "../authorization";
 
 /** if present the route will use navigation bar */
-export type NAVIGATION_BAR = "navigationbar";
+export type NAVIGATION_BAR = "nonavigationbar";
 /** if present the route is disabled */
 export type DISABLED = "disabled";
 

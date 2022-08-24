@@ -13,7 +13,6 @@ export const routes: NavItensProps[] = [
         itemLabel: "Index",
         icon: <FaGlobeAmericas />,
         authorization: "guest",
-        enables: ["navigationbar"],
     },
     {
         path: "/pomodoro",
@@ -21,7 +20,6 @@ export const routes: NavItensProps[] = [
         itemLabel: "pomodoro",
         icon: <CgSandClock />,
         authorization: "guest",
-        enables: ["navigationbar"],
     },
     {
         path: "/notes",
@@ -29,7 +27,6 @@ export const routes: NavItensProps[] = [
         itemLabel: "notes",
         icon: <FaRegStickyNote />,
         authorization: "user",
-        enables: ["navigationbar"],
         routes: [
             {
                 path: "new",
@@ -37,6 +34,7 @@ export const routes: NavItensProps[] = [
                 itemLabel: "new note",
                 icon: <FaRegStickyNote />,
                 authorization: "user",
+                enables: ["nonavigationbar"],
             }
         ]
     },
@@ -46,7 +44,6 @@ export const routes: NavItensProps[] = [
         itemLabel: "tasks",
         icon: <CgCheckR />,
         authorization: "user",
-        enables: ["navigationbar"],
     },
 
 ]

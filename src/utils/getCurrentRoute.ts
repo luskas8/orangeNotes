@@ -1,18 +1,17 @@
+import { NavItemProps } from "@components";
 import { routes } from "@config/routes.config";
 
-export default function getCurrentRoute(pathname: string) {
-    let sourceRoutes = routes;
-    let splitedPathname = pathname.substring(1, pathname.length).split("/");
-    if (splitedPathname[0] === "") {
-        splitedPathname[0] = "/";
-    }
-    let howDeep = 0;
-    while (howDeep < splitedPathname.length) {
-        sourceRoutes = sourceRoutes.filter(route => route.path === splitedPathname[0]);
+export default function getCurrentRoute(pathname: string, recursiveSourceRoutes = routes, deepOffset = 0): NavItemProps | null {
+    let sourceRoutes = recursiveSourceRoutes;
+    let splitedPathname = pathname.split("/").slice(1);
+    let howDeep = deepOffset;
+    sourceRoutes = sourceRoutes.filter(route => route.path.includes(splitedPathname[howDeep]));
 
-        if (sourceRoutes === undefined) {
-            return;
-        }
-        console.log("A")
+    if (sourceRoutes === undefined) {
+        return null;
     }
+    if (sourceRoutes && sourceRoutes[0] && sourceRoutes[0].routes && howDeep + 1 < splitedPathname.length) {
+        return getCurrentRoute(pathname, sourceRoutes[0].routes, howDeep + 1);
+    }
+    return sourceRoutes[0]
 }

@@ -1,10 +1,11 @@
+import { NavItemProps } from "@components";
 import getCurrentRoute from "@utils/getCurrentRoute";
-import { useEffect } from "react";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export interface NavigationContextProps {
-    enableNavigationBar: boolean;
+    currentRoute: NavItemProps | null;
+    disableNavigationBar: boolean;
     toogleNavigationState: (newState: boolean) => void;
 }
 
@@ -13,7 +14,8 @@ interface NavigationProviderProps {
 }
 
 const defaultValues: NavigationContextProps = {
-    enableNavigationBar: true,
+    currentRoute: null,
+    disableNavigationBar: false,
     toogleNavigationState: (newState: boolean) => { },
 }
 
@@ -21,20 +23,29 @@ export const NavigationContext = createContext<NavigationContextProps>(defaultVa
 
 export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     const { pathname } = useLocation();
-    const [enableNavigationBar, toogleNavState] = useState<boolean>(defaultValues.enableNavigationBar);
-
-    useEffect(() => {
-        getCurrentRoute(pathname)
-    }, [pathname])
+    const [currentRoute, updateRoute] = useState<NavItemProps | null>(getCurrentRoute(pathname));
+    const [disableNavigationBar, toogleNavState] = useState<boolean>(defaultValues.disableNavigationBar);
 
     const toogleNavigationState = (newState: boolean) => {
         toogleNavState(newState);
     }
 
+    useMemo(() => {
+        updateRoute(getCurrentRoute(pathname))
+    }, [pathname])
+
+    useMemo(() => {
+        if (currentRoute) {
+            const { enables } = currentRoute;
+            toogleNavState(enables !== undefined ? enables.includes("nonavigationbar") : false);
+        }
+    }, [currentRoute])
+
     return (
         <NavigationContext.Provider
             value={{
-                enableNavigationBar,
+                currentRoute,
+                disableNavigationBar,
                 toogleNavigationState,
             }}
         >
