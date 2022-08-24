@@ -1,15 +1,20 @@
+import { Container, Grid } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
-import { Search } from "../../components";
+import { Search, TaskItem } from "../../components";
+import { useFirebase } from "../../hooks";
 
 export const Tasks = () => {
-    const route = useLocation();
+    const { tasks } = useFirebase();
     const { t } = useTranslation();
 
     return (
-        <>
-            <Search placeholderText={t('search_tasks')} />
-            <h1>{route.pathname}</h1>
-        </>
-    )
-}
+        <Container width="100%" height="100%">
+            <Search placeholderText={t("search_notes")} />
+            <Grid padding="0 8px" color={"white"}>
+                {tasks.map((task) => (
+                    <TaskItem key={task.id} {...task} />
+                ))}
+            </Grid>
+        </Container>
+    );
+};
