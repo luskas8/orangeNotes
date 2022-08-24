@@ -26,8 +26,8 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavIt
     }
 
     return (
-        <Box key={v4()} color={isActive ? "orange.600" : "gray.600"} boxSize={"24px"} minWidth="0px" margin="0px !important">
-            <Button minWidth="0px" bg="transparent" padding={"0"} onClick={handleItemClick} width="100%" height="100%">
+        <Box as="li" role="none" listStyleType="none" key={v4()} color={isActive ? "orange.600" : "gray.600"} boxSize={"24px"} minWidth="0px" margin="0px !important">
+            <Button role="menuitem" minWidth="0px" bg="transparent" padding={"0"} onClick={handleItemClick} width="100%" height="100%">
                 {icon}
             </Button>
         </Box>
