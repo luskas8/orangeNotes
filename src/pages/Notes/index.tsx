@@ -1,9 +1,7 @@
 import { Container, Wrap } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
 import { Note } from "@contexts";
-import { Note } from "@contexts";
 import { useFirebase } from "@hooks";
-import { NavItensProps } from "@types";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet, useOutlet } from "react-router-dom";
@@ -34,25 +32,6 @@ export const Notes = () => {
     if (inChildRoute) {
         return <Outlet />
     }
-
-    function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-        updateSearch(e.target.value);
-    }
-
-    const filterList = useCallback(() => {
-    }, [])
-
-    useEffect(() => {
-        let list: Note[] = [];
-        if (search !== "") {
-            notes.forEach(note => {
-                if (note.title.toLocaleLowerCase().includes(search) || note.content.toLocaleLowerCase().includes(search)) {
-                    list.push(note)
-                }
-            })
-        }
-        updateFilter(list);
-    }, [search])
 
     return (
         <Container
