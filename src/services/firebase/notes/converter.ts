@@ -1,5 +1,5 @@
 import { QueryDocumentSnapshot, SnapshotOptions } from "firebase/firestore";
-import { Note } from "../../contexts";
+import { Note } from "@contexts";
 
 const notesConverter = {
     toFirestore: (note: Note) => {

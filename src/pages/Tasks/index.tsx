@@ -1,11 +1,13 @@
-import { Box, Button, Container } from "@chakra-ui/react";
+import { Container, Grid } from "@chakra-ui/react";
 import { NewItem, Search } from "@components";
+import { TaskItem } from "@components/TaskItem";
+import { useFirebase } from "@hooks";
 import { NavItensProps } from "@types";
 import { useTranslation } from "react-i18next";
-import { HiOutlinePlus } from "react-icons/hi";
 import { useLocation } from "react-router-dom";
 
 export const Tasks = (props: NavItensProps) => {
+    const { tasks } = useFirebase();
     const route = useLocation();
     const { t } = useTranslation();
 
@@ -17,8 +19,12 @@ export const Tasks = (props: NavItensProps) => {
             height={{ base: "calc(100vh - 56px)", md: "100vh" }}
         >
             <Search placeholderText={t('search_notes')} />
-            {/* TASKS LIST */}
-            <NewItem to="/"/>
+            <Grid padding="0 8px" color={"white"}>
+                {tasks.map((task) => (
+                    <TaskItem key={task.id} {...task} />
+                ))}
+            </Grid>
+            <NewItem to="/" />
         </Container>
     )
 }

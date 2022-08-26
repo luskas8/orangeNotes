@@ -1,6 +1,6 @@
 import { collection, Firestore, onSnapshot } from "firebase/firestore";
-import { Note } from "../../contexts";
-import notesConverter from "./notesConverter";
+import { Note } from "../../../contexts";
+import notesConverter from "./converter";
 
 const snapshot = (store: Firestore, updateState: Function) => {
     const coolRef = collection(store, "notes").withConverter(notesConverter);

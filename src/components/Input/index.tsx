@@ -1,6 +1,6 @@
-import { useField } from "@unform/core"
-import { InputHTMLAttributes, useEffect, useRef } from "react"
-
+import { Box, Input as ChakraInput, InputProps as ChakraInputProps } from "@chakra-ui/react";
+import { useField } from "@unform/core";
+import { useEffect, useRef } from "react";
 interface Props {
     name: string
     type?:
@@ -23,7 +23,7 @@ interface Props {
     value?: string
 }
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & Props
+type InputProps = ChakraInputProps & Props
 
 export function Input({ name, type, label, value, ...rest }: InputProps) {
     const inputRef = useRef(null)
@@ -54,18 +54,18 @@ export function Input({ name, type, label, value, ...rest }: InputProps) {
     }, [fieldName, registerField])
 
     return (
-        <div>
-            <label htmlFor={fieldName}>{label}</label>
+        <Box>
+            {/* <label htmlFor={fieldName}>{label}</label> */}
 
-            <input
-                type={type || 'text'}
+            <ChakraInput
+                type={type || "text"}
                 id={fieldName}
                 ref={inputRef}
                 defaultValue={defaultInputValue}
                 {...rest}
             />
 
-            {error && <span>{error}</span>}
-        </div>
+            {error && <Box as="span">{error}</Box>}
+        </Box>
     )
 }
