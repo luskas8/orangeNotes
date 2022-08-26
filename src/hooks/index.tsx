@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { BreakpointContext } from "@contexts/breakpoint";
 import { FirebaseContext } from "@contexts/firebase";
 import { NavigationContext } from "@contexts/navigation";
+import { LeavingGuardContext } from "@contexts";
 
 export const useFirebase = () => {
     const context = useContext(FirebaseContext);
@@ -28,6 +29,15 @@ export const useNavigation = () => {
 
     if (!context) {
         throw "Navgation cannot be used, please try again later!";
+    }
+
+    return context;
+}
+export const useLeavingGuard = () => {
+    const context = useContext(LeavingGuardContext);
+
+    if (!context) {
+        throw "Leaving Guard cannot be used, please try again later!";
     }
 
     return context;

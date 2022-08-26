@@ -34,7 +34,7 @@ export const routes: NavItensProps[] = [
                 itemLabel: "new note",
                 icon: <FaRegStickyNote />,
                 authorization: "user",
-                enables: ["nonavigationbar"],
+                enables: ["nonavigationbar", "leavingguard"],
             }
         ]
     },
