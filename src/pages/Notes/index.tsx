@@ -40,13 +40,13 @@ export const Notes = () => {
             width="100%"
             height={{ base: "calc(100vh - 56px)", md: "100vh" }}
         >
-            <Search placeholderText={t('search_notes')} value={search} handleOnChange={handleOnChange} value={search} handleOnChange={handleOnChange} />
+            <Search placeholderText={t('search_notes')} value={search} handleOnChange={handleOnChange} />
             <Wrap color={"white"}>
                 {filteredNotes && filteredNotes.map(note => <NoteItem key={note.id} {...note} />)}
                 {!filteredNotes.length && filteredNotes && filteredNotes.map(note => <NoteItem key={note.id} {...note} />)}
                 {!filteredNotes.length && notes.map(note => <NoteItem key={note.id} {...note} />)}
             </Wrap>
-            <NewItem to="/notes/new"  />
+            <NewItem to="/notes/new" />
         </Container>
     )
 }
