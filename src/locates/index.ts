@@ -7,13 +7,19 @@ import translationES from "./es/translation.json";
 
 export const resources = {
   en: {
-    translationEN,
+    translation: translationEN,
+  },
+  "en-US": {
+    translation: translationEN,
   },
   pt: {
-    translationPT,
+    translation: translationPT,
+  },
+  "pt-BR": {
+    translation: translationPT,
   },
   es: {
-    translationES,
+    translation: translationES,
   },
 } as const;
 
@@ -25,10 +31,10 @@ i18n
   // init i18next
   .init({
     fallbackLng: 'en',
-    ns: ['translationEN', 'translationPT', 'translationES'],
+    defaultNS: ['translationEN'],
+    ns: ['translationPT', 'translationEN', 'translationES'],
     debug: import.meta.env.DEV,
     resources,
   });
-
 
 export default i18n;

@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 export const Tasks = () => {
     const { tasks } = useFirebase();
     const route = useLocation();
-    const { t } = useTranslation();
+    const { t } = useTranslation('translation');
 
     return (
         <Container

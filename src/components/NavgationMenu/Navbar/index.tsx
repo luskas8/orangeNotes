@@ -10,7 +10,7 @@ import { NavItem, NavItemProps } from "../NavItem";
 
 export const Navbar = ({ navItens }: NavMenuProps) => {
     const { disableNavigationBar, currentRoute } = useNavigation();
-    const { t } = useTranslation();
+    const { t } = useTranslation('translation');
 
     if (disableNavigationBar) {
         const formNavItems: NavItemProps[] = [

@@ -1,4 +1,4 @@
-import { Container, Wrap } from "@chakra-ui/react";
+import { Center, Container, Flex, Wrap } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
 import { Note } from "@contexts";
 import { useFirebase } from "@hooks";
@@ -10,7 +10,7 @@ export const Notes = () => {
     const [filteredNotes, updateFilter] = useState<Note[]>([]);
     const [search, updateSearch] = useState<string>("");
     const { notes } = useFirebase();
-    const { t } = useTranslation();
+    const { t } = useTranslation('translation');
     const inChildRoute = useOutlet();
 
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
@@ -42,9 +42,12 @@ export const Notes = () => {
         >
             <Search placeholderText={t('search_notes')} value={search} handleOnChange={handleOnChange} />
             <Wrap color={"white"}>
-                {filteredNotes && filteredNotes.map(note => <NoteItem key={note.id} {...note} />)}
-                {!filteredNotes.length && filteredNotes && filteredNotes.map(note => <NoteItem key={note.id} {...note} />)}
-                {!filteredNotes.length && notes.map(note => <NoteItem key={note.id} {...note} />)}
+                {!!filteredNotes.length ? filteredNotes.map(note => <NoteItem key={note.id} {...note} />) :
+                    !!search.length &&
+                    <Flex justifyContent="center" boxSize="100%">
+                        <Container w="fit-content">No data</Container>
+                    </Flex>}
+                {!search.length && notes.map(note => <NoteItem key={note.id} {...note} />)}
             </Wrap>
             <NewItem to="/notes/new" />
         </Container>
