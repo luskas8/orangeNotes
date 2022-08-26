@@ -1,6 +1,7 @@
 import { Container, Wrap } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
 import { Note } from "@contexts";
+import { Note } from "@contexts";
 import { useFirebase } from "@hooks";
 import { NavItensProps } from "@types";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -34,6 +35,25 @@ export const Notes = () => {
         return <Outlet />
     }
 
+    function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
+        updateSearch(e.target.value);
+    }
+
+    const filterList = useCallback(() => {
+    }, [])
+
+    useEffect(() => {
+        let list: Note[] = [];
+        if (search !== "") {
+            notes.forEach(note => {
+                if (note.title.toLocaleLowerCase().includes(search) || note.content.toLocaleLowerCase().includes(search)) {
+                    list.push(note)
+                }
+            })
+        }
+        updateFilter(list);
+    }, [search])
+
     return (
         <Container
             position="relative"
@@ -41,12 +61,13 @@ export const Notes = () => {
             width="100%"
             height={{ base: "calc(100vh - 56px)", md: "100vh" }}
         >
-            <Search placeholderText={t('search_notes')} value={search} handleOnChange={handleOnChange} />
+            <Search placeholderText={t('search_notes')} value={search} handleOnChange={handleOnChange} value={search} handleOnChange={handleOnChange} />
             <Wrap color={"white"}>
                 {filteredNotes && filteredNotes.map(note => <NoteItem key={note.id} {...note} />)}
+                {!filteredNotes.length && filteredNotes && filteredNotes.map(note => <NoteItem key={note.id} {...note} />)}
                 {!filteredNotes.length && notes.map(note => <NoteItem key={note.id} {...note} />)}
             </Wrap>
-            <NewItem to="/notes/new" />
+            <NewItem to="/notes/new"  />
         </Container>
     )
 }

@@ -24,7 +24,7 @@ export const NavigationContext = createContext<NavigationContextProps>(defaultVa
 
 export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     const { pathname } = useLocation();
-    // const { useLeavingPage } = useLeavingGuard();
+    const { useLeavingPage } = useLeavingGuard();
     const [currentRoute, updateRoute] = useState<NavItemProps | null>(getCurrentRoute(pathname));
     const [disableNavigationBar, toogleNavState] = useState<boolean>(defaultValues.disableNavigationBar);
 
@@ -40,7 +40,7 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
         if (currentRoute) {
             const { enables } = currentRoute;
             toogleNavState(enables !== undefined ? enables.includes("nonavigationbar") : false);
-            // useLeavingPage(enables !== undefined ? enables.includes("leavingguard") : false)
+            useLeavingPage(enables !== undefined ? enables.includes("leavingguard") : false)
         }
     }, [currentRoute])
 
