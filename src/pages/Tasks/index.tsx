@@ -18,7 +18,7 @@ export const Tasks = (props: NavItensProps) => {
             width="100%"
             height={{ base: "calc(100vh - 56px)", md: "100vh" }}
         >
-            <Search placeholderText={t('search_notes')} />
+            <Search placeholderText={t('search_notes')} value="" handleOnChange={() => {}} />
             <Grid padding="0 8px" color={"white"}>
                 {tasks.map((task) => (
                     <TaskItem key={task.id} {...task} />
