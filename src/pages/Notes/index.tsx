@@ -3,27 +3,20 @@ import { NewItem, NoteItem, Search } from "@components";
 import { Note } from "@contexts";
 import { useFirebase } from "@hooks";
 import { NavItensProps } from "@types";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet, useOutlet } from "react-router-dom";
 
-export const Notes = (props: NavItensProps) => {
+export const Notes = () => {
     const [filteredNotes, updateFilter] = useState<Note[]>([]);
     const [search, updateSearch] = useState<string>("");
     const { notes } = useFirebase();
     const { t } = useTranslation();
     const inChildRoute = useOutlet();
 
-    if (inChildRoute) {
-        return <Outlet />
-    }
-
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
         updateSearch(e.target.value);
     }
-
-    const filterList = useCallback(() => {
-    }, [])
 
     useEffect(() => {
         let list: Note[] = [];
@@ -36,6 +29,10 @@ export const Notes = (props: NavItensProps) => {
         }
         updateFilter(list);
     }, [search])
+
+    if (inChildRoute) {
+        return <Outlet />
+    }
 
     return (
         <Container

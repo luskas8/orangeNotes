@@ -35,7 +35,6 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavIt
         if (itemLabel === "delete") {
             updateLoadingState(true);
             const id = localStorage.getItem("orange-note_local-note-id") || "";
-            console.log(id)
             if (id !== "") {
                 await deleteNote(id);
             }

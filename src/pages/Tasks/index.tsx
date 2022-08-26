@@ -6,7 +6,7 @@ import { NavItensProps } from "@types";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 
-export const Tasks = (props: NavItensProps) => {
+export const Tasks = () => {
     const { tasks } = useFirebase();
     const route = useLocation();
     const { t } = useTranslation();
@@ -18,7 +18,7 @@ export const Tasks = (props: NavItensProps) => {
             width="100%"
             height={{ base: "calc(100vh - 56px)", md: "100vh" }}
         >
-            <Search placeholderText={t('search_notes')} value="" handleOnChange={() => {}} />
+            {/* <Search placeholderText={t('search_notes')} value="" handleOnChange={() => {}} /> */}
             <Grid padding="0 8px" color={"white"}>
                 {tasks.map((task) => (
                     <TaskItem key={task.id} {...task} />

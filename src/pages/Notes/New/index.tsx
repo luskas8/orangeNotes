@@ -14,7 +14,7 @@ export interface FormProps {
     content: string;
 }
 
-export const NewNote = (props: NavItensProps) => {
+export const NewNote = () => {
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
     const [currentID, setID] = useState<string | null>(null);
     const formRef = useRef<FormHandles>(null);
