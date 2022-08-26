@@ -23,7 +23,7 @@ export const Navbar = ({ navItens }: NavMenuProps) => {
             <Box as="nav" w="100%" margin={0} padding={["1rem 1.25rem"]}>
                 <HStack as="ul" role="menubar" padding={0} justifyContent={"flex-start"} alignItems={"flex-start"}>
                     <NavItem key={v4()} {...fakeItem} />
-                    <Box as="h1" aria-label="back">{currentRoute?.itemLabel || t("back")}</Box>
+                    {/* <Box as="h1" fontSize={"xl"} verticalAlign={"middle"} aria-label="back" color={"gray.600"}>{currentRoute?.itemLabel || t("back")}</Box> */}
                 </HStack>
             </Box>
         )

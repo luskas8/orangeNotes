@@ -16,6 +16,8 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@types/firebase": "^3.2.1",
+    "@unform/core": "^2.1.6",
+    "@unform/web": "^2.1.6",
     "firebase": "^9.9.3",
     "framer-motion": "^7.2.0",
     "i18next": "^21.9.1",

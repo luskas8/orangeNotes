@@ -1,20 +1,14 @@
-import { Box, Button, Container, Wrap } from "@chakra-ui/react";
-import { NoteItem, Search } from "@components";
+import { Container, Wrap } from "@chakra-ui/react";
+import { NewItem, NoteItem, Search } from "@components";
 import { useFirebase } from "@hooks";
 import { NavItensProps } from "@types";
 import { useTranslation } from "react-i18next";
-import { HiOutlinePlus } from "react-icons/hi";
-import { Outlet, useNavigate, useOutlet } from "react-router-dom";
+import { Outlet, useOutlet } from "react-router-dom";
 
 export const Notes = (props: NavItensProps) => {
     const { notes } = useFirebase();
     const { t } = useTranslation();
     const inChildRoute = useOutlet();
-    const navigatate = useNavigate();
-
-    function handleNewNote() {
-        navigatate("/notes/new");
-    }
 
     if (inChildRoute) {
         return <Outlet />
@@ -31,17 +25,7 @@ export const Notes = (props: NavItensProps) => {
             <Wrap color={"white"}>
                 {notes.map(note => <NoteItem key={note.id} {...note} />)}
             </Wrap>
-            <Box
-                position="absolute"
-                boxSize={"56px"}
-                bottom="56px"
-                right="24px"
-                borderRadius="50px"
-            >
-                <Button onClick={handleNewNote} borderRadius="inherit" width="100%" height="100%">
-                    <HiOutlinePlus />
-                </Button>
-            </Box>
+            <NewItem to="/notes/new"/>
         </Container>
     )
 }
