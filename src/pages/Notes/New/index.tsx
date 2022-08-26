@@ -2,13 +2,12 @@ import { Box } from "@chakra-ui/react";
 import { Input } from "@components/Input";
 import { Textarea } from "@components/Textarea";
 import { Note } from "@contexts";
-import { useNavigation } from "@hooks";
 import addNote from "@services/firebase/notes/add";
 import updateNote from "@services/firebase/notes/update";
 import { NavItensProps } from "@types";
-import { FormHandles, SubmitHandler } from "@unform/core";
+import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export interface FormProps {
     title: string;
@@ -18,25 +17,37 @@ export interface FormProps {
 export const NewNote = (props: NavItensProps) => {
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
     const [currentID, setID] = useState<string | null>(null);
-    const formRef = useRef<FormHandles>(null)
+    const formRef = useRef<FormHandles>(null);
 
-    function converter(): FormProps | Note {
+    function saveLocal(data: Note) {
+        localStorage.setItem("orange-note_local-note-title", data.title);
+        localStorage.setItem("orange-note_local-note-content", data.content);
+
+        if (data.id !== "") {
+            localStorage.setItem("orange-note_local-note-id", data.id);
+        }
+    }
+
+    function converter(): Note | FormProps {
         let data: any = formRef.current?.getData();
 
         return currentID ? { id: currentID, title: data.title, content: data.content } : { title: data.title, content: data.content };
     }
 
     function debounce() {
+        const data = converter();
+        saveLocal({ id: currentID || "", ...data });
+
         if (timeoutID) {
-            clearInterval(timeoutID);
+            clearTimeout(timeoutID);
+            localStorage.removeItem("orange-notes_timeout-id");
         }
-        updateTimeoutID(setTimeout(() => saveData(), 1500));
+        const tempTimeoutID = setTimeout(() => saveData(data), 1500);
+        localStorage.setItem("orange-notes_timeout-id", tempTimeoutID.toString());
+        updateTimeoutID(tempTimeoutID);
     }
 
-    async function saveData() {
-        console.log("CHEGOU")
-        const data = converter();
-
+    async function saveData(data: FormProps) {
         if (currentID) {
             await updateNote({ id: currentID, ...data })
         } else {
@@ -54,7 +65,7 @@ export const NewNote = (props: NavItensProps) => {
             <Form
                 ref={formRef}
                 onChange={debounce}
-                onSubmit={() => {}}
+                onSubmit={() => { }}
                 initialData={inicialData}
             >
                 <Input

@@ -4,6 +4,7 @@ import { NavMenuProps } from "@types";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import { FiArrowLeft } from "react-icons/fi";
+import { MdOutlineDelete } from "react-icons/md";
 import { v4 } from "uuid";
 import { NavItem, NavItemProps } from "../NavItem";
 
@@ -12,18 +13,28 @@ export const Navbar = ({ navItens }: NavMenuProps) => {
     const { t } = useTranslation();
 
     if (disableNavigationBar) {
-        const fakeItem: NavItemProps = {
-            authorization: "guest",
-            component: () => {},
-            icon: <FiArrowLeft />,
-            itemLabel: "back",
-            path: "",
-        }
+        const formNavItems: NavItemProps[] = [
+            {
+                authorization: "guest",
+                component: () => { },
+                icon: <FiArrowLeft />,
+                itemLabel: "back",
+                path: "",
+            },
+            {
+                authorization: "guest",
+                component: () => { },
+                icon: <MdOutlineDelete color={"var(--chakra-colors-red-700)"} />,
+                itemLabel: "delete",
+                path: "/notes",
+            }
+        ]
         return (
             <Box as="nav" w="100%" margin={0} padding={["1rem 1.25rem"]}>
-                <HStack as="ul" role="menubar" padding={0} justifyContent={"flex-start"} alignItems={"flex-start"}>
-                    <NavItem key={v4()} {...fakeItem} />
-                    {/* <Box as="h1" fontSize={"xl"} verticalAlign={"middle"} aria-label="back" color={"gray.600"}>{currentRoute?.itemLabel || t("back")}</Box> */}
+                <HStack as="ul" role="menubar" padding={0} justifyContent={"space-between"} alignItems={"flex-start"}>
+                    {formNavItems?.map((item) => {
+                        return <NavItem key={v4()} {...item} />
+                    })}
                 </HStack>
             </Box>
         )

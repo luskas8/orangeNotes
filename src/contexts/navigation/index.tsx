@@ -1,4 +1,5 @@
 import { NavItemProps } from "@components";
+import { useLeavingGuard } from "@hooks";
 import getCurrentRoute from "@utils/getCurrentRoute";
 import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -6,7 +7,7 @@ import { useLocation } from "react-router-dom";
 export interface NavigationContextProps {
     currentRoute: NavItemProps | null;
     disableNavigationBar: boolean;
-    toogleNavigationState: (newState: boolean) => void;
+    toggleNavigationState: (newState: boolean) => void;
 }
 
 interface NavigationProviderProps {
@@ -16,17 +17,18 @@ interface NavigationProviderProps {
 const defaultValues: NavigationContextProps = {
     currentRoute: null,
     disableNavigationBar: false,
-    toogleNavigationState: (newState: boolean) => { },
+    toggleNavigationState: (newState: boolean) => { },
 }
 
 export const NavigationContext = createContext<NavigationContextProps>(defaultValues);
 
 export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     const { pathname } = useLocation();
+    const { useLeavingPage } = useLeavingGuard();
     const [currentRoute, updateRoute] = useState<NavItemProps | null>(getCurrentRoute(pathname));
     const [disableNavigationBar, toogleNavState] = useState<boolean>(defaultValues.disableNavigationBar);
 
-    const toogleNavigationState = (newState: boolean) => {
+    const toggleNavigationState = (newState: boolean) => {
         toogleNavState(newState);
     }
 
@@ -34,10 +36,11 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
         updateRoute(getCurrentRoute(pathname))
     }, [pathname])
 
-    useMemo(() => {
+    useEffect(() => {
         if (currentRoute) {
             const { enables } = currentRoute;
             toogleNavState(enables !== undefined ? enables.includes("nonavigationbar") : false);
+            useLeavingPage(enables !== undefined ? enables.includes("leavingguard") : false)
         }
     }, [currentRoute])
 
@@ -46,7 +49,7 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
             value={{
                 currentRoute,
                 disableNavigationBar,
-                toogleNavigationState,
+                toggleNavigationState,
             }}
         >
             {children}
