@@ -1,8 +1,15 @@
 import { Box, Container } from "@chakra-ui/react"
 import { Note } from "@contexts"
 import removeHTMLTags from "@utils/removeHTMLTags"
+import { useNavigate } from "react-router-dom"
 
 export const NoteItem = (note: Note) => {
+    const navigate = useNavigate()
+
+    function handleOnClick() {
+        navigate(`/notes/${note.id}`)
+    }
+
     return (
         <Box
             key={note.id}
@@ -17,6 +24,7 @@ export const NoteItem = (note: Note) => {
             flexDirection="column"
             justifyContent="space-between"
             gap="6px"
+            onClick={handleOnClick}
         >
             <Box>
                 <Box

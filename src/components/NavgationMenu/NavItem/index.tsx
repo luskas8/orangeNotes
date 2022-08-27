@@ -1,5 +1,5 @@
 import { Box, Button } from "@chakra-ui/react"
-import { useLeavingGuard } from "@hooks"
+import { useLeavingGuard, useNavigation } from "@hooks"
 import deleteNote from "@services/firebase/notes/delete"
 import { NavItensProps } from "@types"
 import levingNote from "@utils/leavingNote"
@@ -19,12 +19,14 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavIt
     const { usingLeavingPage, useLeavingPage } = useLeavingGuard();
     const { pathname } = useLocation();
     const navigate = useNavigate();
+    const { setParam } = useNavigation();
     const isActive = path === pathname;
 
     async function handleItemClick(e: MouseEvent<HTMLButtonElement>) {
         if (itemLabel === "back") {
             if (usingLeavingPage) {
                 useLeavingPage(false);
+                setParam("")
                 levingNote();
             }
 
@@ -39,6 +41,7 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavIt
                 await deleteNote(id);
             }
             updateLoadingState(false);
+            setParam("")
             navigate(path);
             return;
         }

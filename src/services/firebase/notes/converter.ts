@@ -12,10 +12,7 @@ const notesConverter = {
     },
     fromFirestore: (snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Note => {
         const data = snapshot.data(options);
-        if (data.timestamp && data.timestamp.seconds) {
-            // console.log(new Date(data.timestamp.seconds).getMonth())
-            data.timestamp = moment(data.timestamp.seconds).format("L");
-        }
+        data.timestamp = moment(data.timestamp.toMillis()).format("L");
         return { title: data.title, content: data.content, id: snapshot.id, timestamp: data.timestamp };
     }
 }

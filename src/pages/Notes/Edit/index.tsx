@@ -2,20 +2,26 @@ import { Box } from "@chakra-ui/react";
 import { Input } from "@components/Input";
 import { Textarea } from "@components/Textarea";
 import { Note } from "@contexts";
+import { useNavigation } from "@hooks";
 import addNote from "@services/firebase/notes/add";
+import getNote from "@services/firebase/notes/get";
 import updateNote from "@services/firebase/notes/update";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
-export interface FormProps {
+interface FormProps {
+    id: string;
     title: string;
     content: string;
 }
 
-export const NewNote = () => {
+export const EditNote = () => {
+    const params = useParams();
+    const { setParam } = useNavigation();
+    const currentID = params.noteId!;
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
-    const [currentID, setID] = useState<string | null>(null);
     const formRef = useRef<FormHandles>(null);
 
     function saveLocal(data: Note) {
@@ -30,12 +36,12 @@ export const NewNote = () => {
     function converter(): Note | FormProps {
         let data: any = formRef.current?.getData();
 
-        return currentID ? { id: currentID, title: data.title, content: data.content } : { title: data.title, content: data.content };
+        return { id: currentID, title: data.title, content: data.content };
     }
 
     function debounce() {
         const data = converter();
-        saveLocal({ id: currentID || "", ...data });
+        saveLocal(data);
 
         if (timeoutID) {
             clearTimeout(timeoutID);
@@ -47,17 +53,28 @@ export const NewNote = () => {
     }
 
     async function saveData(data: FormProps) {
-        if (currentID) {
-            await updateNote({ id: currentID, ...data })
-        } else {
-            setID(await addNote(data));
-        }
+        await updateNote(data)
     }
 
     const inicialData: FormProps = {
+        id: currentID,
         title: "",
         content: "",
     }
+
+    useEffect(() => {
+        setParam("noteId");
+    }, []);
+
+    useEffect(() => {
+        if (currentID) {
+            (async function fetchNote() {
+                let data = await getNote(currentID);
+                console.log(data)
+                formRef.current?.setData({...data})
+            })();
+        }
+    }, [])
 
     return (
         <Box color={"white"}>

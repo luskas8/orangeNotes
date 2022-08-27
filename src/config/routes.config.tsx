@@ -1,4 +1,4 @@
-import { NewNote, Notes } from "@pages/Notes";
+import { EditNote, NewNote, Notes } from "@pages/Notes";
 import { Pomodoro } from "@pages/Pomodoro";
 import { Tasks } from "@pages/Tasks";
 import { NavItensProps } from "@types";
@@ -32,6 +32,14 @@ export const routes: NavItensProps[] = [
                 path: "new",
                 component: () => <NewNote />,
                 itemLabel: "new note",
+                icon: <FaRegStickyNote />,
+                authorization: "user",
+                enables: ["nonavigationbar", "leavingguard"],
+            },
+            {
+                path: ":noteId",
+                component: () => <EditNote />,
+                itemLabel: "edit note",
                 icon: <FaRegStickyNote />,
                 authorization: "user",
                 enables: ["nonavigationbar", "leavingguard"],

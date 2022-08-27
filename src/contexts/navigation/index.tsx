@@ -1,12 +1,13 @@
 import { NavItemProps } from "@components";
 import { useLeavingGuard } from "@hooks";
 import getCurrentRoute from "@utils/getCurrentRoute";
-import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export interface NavigationContextProps {
     currentRoute: NavItemProps | null;
     disableNavigationBar: boolean;
+    setParam: (param: string) => void;
     toggleNavigationState: (newState: boolean) => void;
 }
 
@@ -17,6 +18,7 @@ interface NavigationProviderProps {
 const defaultValues: NavigationContextProps = {
     currentRoute: null,
     disableNavigationBar: false,
+    setParam: (param: string) => {},
     toggleNavigationState: (newState: boolean) => { },
 }
 
@@ -25,16 +27,17 @@ export const NavigationContext = createContext<NavigationContextProps>(defaultVa
 export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     const { pathname } = useLocation();
     const { useLeavingPage } = useLeavingGuard();
-    const [currentRoute, updateRoute] = useState<NavItemProps | null>(getCurrentRoute(pathname));
+    const [param, setParam] = useState<string>("");
+    const [currentRoute, updateRoute] = useState<NavItemProps | null>(getCurrentRoute(pathname, param));
     const [disableNavigationBar, toogleNavState] = useState<boolean>(defaultValues.disableNavigationBar);
 
     const toggleNavigationState = (newState: boolean) => {
         toogleNavState(newState);
     }
 
-    useMemo(() => {
-        updateRoute(getCurrentRoute(pathname))
-    }, [pathname])
+    useEffect(() => {
+        updateRoute(getCurrentRoute(pathname, param))
+    }, [pathname, param])
 
     useEffect(() => {
         if (currentRoute) {
@@ -49,6 +52,7 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
             value={{
                 currentRoute,
                 disableNavigationBar,
+                setParam,
                 toggleNavigationState,
             }}
         >

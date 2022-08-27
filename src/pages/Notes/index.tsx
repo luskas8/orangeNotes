@@ -62,3 +62,4 @@ export const Notes = () => {
 }
 
 export * from "./New";
+export * from "./Edit";
