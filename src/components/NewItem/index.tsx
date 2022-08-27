@@ -16,9 +16,10 @@ export const NewItem = ({ to }: NewItemProps) => {
     return (
         <Box
             position="absolute"
-            boxSize={"56px"}
-            bottom="56px"
-            right="24px"
+            boxSize={{base: "56px", md: "48px"}}
+            bottom={{base: "56px"}}
+            top={{md: "8px"}}
+            right={{base: "24px", md: "32px"}}
             borderRadius="50px"
             color={"orange.600"}
         >

@@ -6,7 +6,7 @@ export interface Note {
     id: string;
     title: string;
     content: string;
-    timestamp?: FieldValue;
+    timestamp?: number | string;
 }
 
 export interface Task {
