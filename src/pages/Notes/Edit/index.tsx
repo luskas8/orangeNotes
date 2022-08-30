@@ -3,12 +3,13 @@ import { Input } from "@components/Input";
 import { Textarea } from "@components/Textarea";
 import { Note } from "@contexts";
 import { useNavigation } from "@hooks";
-import addNote from "@services/firebase/notes/add";
 import getNote from "@services/firebase/notes/get";
 import updateNote from "@services/firebase/notes/update";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import { useEffect, useRef, useState } from "react";
+import { FiArrowLeft } from "react-icons/fi";
+import { MdOutlineDelete } from "react-icons/md";
 import { useParams } from "react-router-dom";
 
 interface FormProps {
@@ -19,9 +20,10 @@ interface FormProps {
 
 export const EditNote = () => {
     const params = useParams();
-    const { setParam } = useNavigation();
+    const { setParam, registerNavItens } = useNavigation();
     const currentID = params.noteId!;
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
+    const [isLoading, updateLoading] = useState<boolean>(false);
     const formRef = useRef<FormHandles>(null);
 
     function saveLocal(data: Note) {
@@ -47,13 +49,15 @@ export const EditNote = () => {
             clearTimeout(timeoutID);
             localStorage.removeItem("orange-notes_timeout-id");
         }
-        const tempTimeoutID = setTimeout(() => saveData(data), 1500);
+        const tempTimeoutID = setTimeout(async () => {await saveData(data) }, 1500);
         localStorage.setItem("orange-notes_timeout-id", tempTimeoutID.toString());
         updateTimeoutID(tempTimeoutID);
     }
 
     async function saveData(data: FormProps) {
+        updateLoading(true)
         await updateNote(data)
+        updateLoading(false)
     }
 
     const inicialData: FormProps = {
@@ -64,17 +68,37 @@ export const EditNote = () => {
 
     useEffect(() => {
         setParam("noteId");
-    }, []);
+    }, [params.noteId]);
 
     useEffect(() => {
         if (currentID) {
             (async function fetchNote() {
                 let data = await getNote(currentID);
-                console.log(data)
-                formRef.current?.setData({...data})
+                formRef.current?.setData({ ...data })
             })();
         }
-    }, [])
+    }, [currentID])
+
+    useEffect(() => {
+        registerNavItens([
+            {
+                authorization: "guest",
+                component: () => { },
+                icon: <FiArrowLeft />,
+                itemLabel: "back",
+                path: "",
+                isLoading: isLoading
+            },
+            {
+                authorization: "guest",
+                component: () => { },
+                icon: <MdOutlineDelete color={"var(--chakra-colors-red-700)"} />,
+                itemLabel: "delete",
+                path: "/notes",
+                isLoading: isLoading
+            }
+        ])
+    }, [isLoading])
 
     return (
         <Box color={"white"}>

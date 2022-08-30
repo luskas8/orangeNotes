@@ -1,5 +1,6 @@
 import { Note } from "@contexts";
 import deleteNote from "@services/firebase/notes/delete";
+import getNote from "@services/firebase/notes/get";
 import updateNote from "@services/firebase/notes/update";
 
 export default async function levingNote() {
@@ -13,6 +14,7 @@ export default async function levingNote() {
         id: localStorage.getItem("orange-note_local-note-id") || "",
     }
 
+
     localStorage.removeItem("orange-note_local-note-title");
     localStorage.removeItem("orange-note_local-note-content");
     localStorage.removeItem("orange-note_local-note-id");
@@ -21,7 +23,7 @@ export default async function levingNote() {
         if (data.title !== "" && data.content !== "") {
             await updateNote(data);
         } else {
-            deleteNote(data.id);
+            await deleteNote(data.id);
         }
     }
 }

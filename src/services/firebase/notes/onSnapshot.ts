@@ -8,7 +8,7 @@ const snapshot = (store: Firestore, updateState: Function) => {
     const unsubscribe = onSnapshot(coolRef, (snapshot) => {
         let data: Note[] = []
         snapshot.forEach(doc => {
-            data.push(doc.data())
+            data.push(doc.data({ serverTimestamps: "estimate" }))
         })
         updateState(data);
     })

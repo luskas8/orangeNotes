@@ -1,7 +1,6 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
 import { firestore } from "@services/firebase";
 import snapshotNotes from "@services/firebase/notes/onSnapshot";
-import { FieldValue } from "firebase/firestore";
+import { createContext, ReactNode, useEffect, useState } from "react";
 export interface Note {
     id: string;
     title: string;
@@ -34,13 +33,9 @@ const defaultValues: FirebaseContextProps = {
         // },
     ],
     tasks: [
-        // { content: "sdjsdaksjkd", completed: true, id: "348348394" },
-        // { content: "asldakoaoa", completed: false, id: "saskasosaoa" },
-        // {
-        //     content: "apoapoaoskdjdjdj",
-        //     completed: false,
-        //     id: "348348394aososo",
-        // },
+        { content: "sdjsdaksjkd", completed: true, id: "348348394" },
+        { content: "asldakoaoa", completed: false, id: "saskasosaoa" },
+        { content: "apoapoaoskdjdjdj", completed: false, id: "348348394aososo" },
     ],
 };
 
