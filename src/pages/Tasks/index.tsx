@@ -23,7 +23,7 @@ export const Tasks = () => {
                     <TaskItem key={task.id} {...task} />
                 ))}
             </Grid>
-            <NewItem to="/" />
+            <NewItem.Task />
         </Container>
     )
 }
