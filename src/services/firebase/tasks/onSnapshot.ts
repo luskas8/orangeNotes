@@ -1,12 +1,12 @@
 import { collection, Firestore, onSnapshot } from "firebase/firestore";
-import { Note } from "../../../contexts";
-import notesConverter from "./converter";
+import { Task } from "../../../contexts";
+import tasksConverter from "./converter";
 
 const snapshot = (store: Firestore, updateState: Function) => {
-    const coolRef = collection(store, "notes").withConverter(notesConverter);
+    const coolRef = collection(store, "tasks").withConverter(tasksConverter);
 
     const unsubscribe = onSnapshot(coolRef, (snapshot) => {
-        let data: Note[] = []
+        let data: Task[] = []
         snapshot.forEach(doc => {
             data.push(doc.data({ serverTimestamps: "estimate" }))
         })

@@ -54,7 +54,7 @@ export function Input({ name, type, label, value, ...rest }: InputProps) {
     }, [fieldName, registerField])
 
     return (
-        <Box>
+        <Box width={type !== "hidden" ? "100%" : ""}>
             {/* <label htmlFor={fieldName}>{label}</label> */}
 
             <ChakraInput

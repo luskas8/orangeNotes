@@ -1,7 +1,7 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
 import { firestore } from "@services/firebase";
 import snapshotNotes from "@services/firebase/notes/onSnapshot";
-import { FieldValue } from "firebase/firestore";
+import snapshotTasks from "@services/firebase/tasks/onSnapshot";
+import { createContext, ReactNode, useEffect, useState } from "react";
 export interface Note {
     id: string;
     title: string;
@@ -13,6 +13,7 @@ export interface Task {
     id: string;
     content: string;
     completed: boolean;
+    timestamp?: number | string;
 }
 
 interface FirebaseContextProps {
@@ -27,20 +28,12 @@ const defaultValues: FirebaseContextProps = {
     notes: [
         // { content: "sdjsdaksjkd", title: "Test 1", id: "348348394" },
         // { content: "asldakoaoa", title: "Test 2", id: "saskasosaoa" },
-        // {
-        //     content: "apoapoaoskdjdjdj",
-        //     title: "Test 3",
-        //     id: "348348394aososo",
-        // },
+        // { content: "apoapoaoskdjdjdj", title: "Test 3", id: "348348394aososo" },
     ],
     tasks: [
         // { content: "sdjsdaksjkd", completed: true, id: "348348394" },
         // { content: "asldakoaoa", completed: false, id: "saskasosaoa" },
-        // {
-        //     content: "apoapoaoskdjdjdj",
-        //     completed: false,
-        //     id: "348348394aososo",
-        // },
+        // { content: "apoapoaoskdjdjdj", completed: false, id: "348348394aososo" },
     ],
 };
 
@@ -52,6 +45,7 @@ export const FirebaseProvider = ({ children }: FirebaseProps) => {
 
     useEffect(() => {
         snapshotNotes(firestore, updateNotes);
+        snapshotTasks(firestore, updateTasks);
     });
 
     return (

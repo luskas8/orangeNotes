@@ -7,6 +7,8 @@ import { useLocation } from "react-router-dom";
 export interface NavigationContextProps {
     currentRoute: NavItemProps | null;
     disableNavigationBar: boolean;
+    navigationItens: NavItemProps[] | null;
+    registerNavItens: (navigationItens: NavItemProps[] | null) => void;
     setParam: (param: string) => void;
     toggleNavigationState: (newState: boolean) => void;
 }
@@ -18,7 +20,9 @@ interface NavigationProviderProps {
 const defaultValues: NavigationContextProps = {
     currentRoute: null,
     disableNavigationBar: false,
-    setParam: (param: string) => {},
+    navigationItens: null,
+    registerNavItens: (navItens: NavItemProps[] | null) => { },
+    setParam: (param: string) => { },
     toggleNavigationState: (newState: boolean) => { },
 }
 
@@ -30,9 +34,18 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
     const [param, setParam] = useState<string>("");
     const [currentRoute, updateRoute] = useState<NavItemProps | null>(getCurrentRoute(pathname, param));
     const [disableNavigationBar, toogleNavState] = useState<boolean>(defaultValues.disableNavigationBar);
+    const [navigationItens, updateNavItens] = useState<NavItemProps[] | null>(defaultValues.navigationItens);
 
     const toggleNavigationState = (newState: boolean) => {
         toogleNavState(newState);
+    }
+
+    const registerNavItens = (navItens: NavItemProps[] | null) => {
+        if (navItens !== null) {
+            updateNavItens(navItens)
+        } else {
+            updateNavItens(null)
+        }
     }
 
     useEffect(() => {
@@ -52,6 +65,8 @@ export const NavigationProvider = ({ children }: NavigationProviderProps) => {
             value={{
                 currentRoute,
                 disableNavigationBar,
+                navigationItens,
+                registerNavItens,
                 setParam,
                 toggleNavigationState,
             }}

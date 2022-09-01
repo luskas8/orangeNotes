@@ -8,14 +8,15 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { v4 } from "uuid"
 
 export interface NavItemProps extends HTMLProps<HTMLDivElement>, NavItensProps {
+    isLoading?: boolean;
 }
 
-export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavItemProps) => {
+export const NavItem = ({ itemLabel, icon, authorization, path, isExact, isLoading }: NavItemProps) => {
     if (isExact) {
         return null;
     }
 
-    const [isLoading, updateLoadingState] = useState<boolean>(false);
+    const [itemIsLoading, updateLoadingState] = useState<boolean>(false);
     const { usingLeavingPage, useLeavingPage } = useLeavingGuard();
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -23,17 +24,19 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavIt
     const isActive = path === pathname;
 
     async function handleItemClick(e: MouseEvent<HTMLButtonElement>) {
-        if (itemLabel === "back") {
-            if (usingLeavingPage) {
-                useLeavingPage(false);
-                setParam("")
-                levingNote();
-            }
-
-            navigate(-1);
+        if (isLoading || itemIsLoading) {
             return;
         }
+        if (itemLabel === "back") {
+            navigate(-1);
 
+            if (usingLeavingPage) {
+                setParam("")
+                useLeavingPage(false);
+                levingNote();
+            }
+            return;
+        }
         if (itemLabel === "delete") {
             updateLoadingState(true);
             const id = localStorage.getItem("orange-note_local-note-id") || "";
@@ -52,8 +55,8 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact }: NavIt
 
     return (
         <Box as="li" role="none" listStyleType="none" key={v4()} color={isActive ? "orange.600" : "gray.600"} boxSize={{ base: "24px", md: "32px" }} minWidth="0px" margin="0px !important">
-            <Button isLoading={isLoading} role="menuitem" minWidth="0px" bg="transparent" padding={{ base: "0", md: "5px" }} onClick={handleItemClick} width="100%" height="100%">
-                {!isLoading && !isLoading && icon}
+            <Button isLoading={isLoading || itemIsLoading} role="menuitem" minWidth="0px" bg="transparent" padding={{ base: "0", md: "5px" }} onClick={handleItemClick} width="100%" height="100%">
+                {(!isLoading || !itemIsLoading) && icon}
             </Button>
         </Box>
     )
