@@ -1,12 +1,15 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+import { NavItem } from "@components";
 import { Input } from "@components/Input";
 import { Textarea } from "@components/Textarea";
 import { Note } from "@contexts";
+import { useNavigation } from "@hooks";
 import addNote from "@services/firebase/notes/add";
 import updateNote from "@services/firebase/notes/update";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FiArrowLeft } from "react-icons/fi";
 
 export interface FormProps {
     title: string;
@@ -14,9 +17,11 @@ export interface FormProps {
 }
 
 export const NewNote = () => {
+    const [isLoading, updateLoading] = useState<boolean>(false);
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
     const [currentID, setID] = useState<string | null>(null);
     const formRef = useRef<FormHandles>(null);
+    const { registerNavItens } = useNavigation();
 
     function saveLocal(data: Note) {
         localStorage.setItem("orange-note_local-note-title", data.title);
@@ -47,11 +52,13 @@ export const NewNote = () => {
     }
 
     async function saveData(data: FormProps) {
+        updateLoading(true);
         if (currentID) {
             await updateNote({ id: currentID, ...data })
         } else {
             setID(await addNote(data));
         }
+        updateLoading(false);
     }
 
     const inicialData: FormProps = {
@@ -59,8 +66,31 @@ export const NewNote = () => {
         content: "",
     }
 
+    useEffect(() => {
+        registerNavItens([
+            {
+                authorization: "guest",
+                component: () => { },
+                icon: <FiArrowLeft />,
+                itemLabel: "back",
+                path: "",
+                isLoading: isLoading
+            }
+        ])
+    }, [isLoading])
+
     return (
-        <Box color={"white"}>
+        <Box padding={{ md: "1.5rem 0" }} color={"white"} width="100%">
+            <Flex display={{ base: "none", md: "inherit" }} height="48px" alignItems="center">
+                <NavItem
+                    authorization="guest"
+                    component={() => { }}
+                    icon={<FiArrowLeft />}
+                    itemLabel="back"
+                    path=""
+                    isLoading={isLoading}
+                />
+            </Flex>
             <Form
                 ref={formRef}
                 onChange={debounce}
@@ -69,8 +99,11 @@ export const NewNote = () => {
             >
                 <Input
                     name="title"
+                    _focusVisible={{}}
                 />
                 <Textarea
+                    height="100%"
+                    _focusVisible={{}}
                     name="content"
                 />
             </Form>

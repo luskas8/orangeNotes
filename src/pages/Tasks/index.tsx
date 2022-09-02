@@ -3,11 +3,9 @@ import { NewItem, Search } from "@components";
 import { TaskItem } from "@components/TaskItem";
 import { useFirebase } from "@hooks";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
 
 export const Tasks = () => {
     const { tasks } = useFirebase();
-    const route = useLocation();
     const { t } = useTranslation('translation');
 
     return (
@@ -17,7 +15,7 @@ export const Tasks = () => {
             width="100%"
             height={{ base: "calc(100vh - 56px)", md: "100vh" }}
         >
-            <Search placeholderText={t('search_notes')} value="" handleOnChange={() => { }} />
+            <Search placeholderText={t('search_tasks')} value="" handleOnChange={() => { }} />
             <Grid padding="0 8px" color={"white"}>
                 {tasks.map((task) => (
                     <TaskItem key={task.id} {...task} />

@@ -1,4 +1,4 @@
-import { Center, Container, Flex, Grid, SimpleGrid, Wrap } from "@chakra-ui/react";
+import { Container, Flex, SimpleGrid } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
 import { Note } from "@contexts";
 import { useFirebase } from "@hooks";
@@ -27,10 +27,10 @@ export const Notes = () => {
             })
         }
         updateFilter(list);
-    }, [search])
+    }, [search]);
 
     if (inChildRoute) {
-        return <Outlet />
+        return <Outlet />;
     }
 
     return (
@@ -43,9 +43,9 @@ export const Notes = () => {
             <Search placeholderText={t('search_notes')} value={search} handleOnChange={handleOnChange} />
             <SimpleGrid
                 overflow="auto"
-                minChildWidth={{base: "130px", md: "250px"}}
+                minChildWidth={{ base: "130px", md: "250px" }}
                 spacing="8px"
-                padding={{md: "0.5rem 1rem"}}
+                padding={{ md: "0.5rem 1rem" }}
                 color="white"
                 maxH={{ base: "calc(100vh - 56px - 56px - 10px)", md: "calc(100vh - 56px - 16px)" }}
             >
@@ -61,5 +61,6 @@ export const Notes = () => {
     )
 }
 
-export * from "./New";
 export * from "./Edit";
+export * from "./New";
+

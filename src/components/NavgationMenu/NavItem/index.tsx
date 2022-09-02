@@ -28,13 +28,10 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact, isLoadi
             return;
         }
         if (itemLabel === "back") {
-            navigate(-1);
-
-            if (usingLeavingPage) {
                 setParam("")
                 useLeavingPage(false);
                 levingNote();
-            }
+            navigate(-1);
             return;
         }
         if (itemLabel === "delete") {

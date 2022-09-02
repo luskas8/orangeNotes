@@ -1,4 +1,5 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+import { NavItem } from "@components";
 import { Input } from "@components/Input";
 import { Textarea } from "@components/Textarea";
 import { Note } from "@contexts";
@@ -29,10 +30,7 @@ export const EditNote = () => {
     function saveLocal(data: Note) {
         localStorage.setItem("orange-note_local-note-title", data.title);
         localStorage.setItem("orange-note_local-note-content", data.content);
-
-        if (data.id !== "") {
-            localStorage.setItem("orange-note_local-note-id", data.id);
-        }
+        localStorage.setItem("orange-note_local-note-id", data.id);
     }
 
     function converter(): Note | FormProps {
@@ -49,7 +47,7 @@ export const EditNote = () => {
             clearTimeout(timeoutID);
             localStorage.removeItem("orange-notes_timeout-id");
         }
-        const tempTimeoutID = setTimeout(async () => {await saveData(data) }, 1500);
+        const tempTimeoutID = setTimeout(async () => { await saveData(data) }, 1500);
         localStorage.setItem("orange-notes_timeout-id", tempTimeoutID.toString());
         updateTimeoutID(tempTimeoutID);
     }
@@ -72,10 +70,13 @@ export const EditNote = () => {
 
     useEffect(() => {
         if (currentID) {
+            updateLoading(true);
             (async function fetchNote() {
                 let data = await getNote(currentID);
                 formRef.current?.setData({ ...data })
+                saveLocal(data!)
             })();
+            updateLoading(false);
         }
     }, [currentID])
 
@@ -101,7 +102,30 @@ export const EditNote = () => {
     }, [isLoading])
 
     return (
-        <Box color={"white"}>
+        <Box color={"white"} width="100%">
+            <Flex
+                display={{ base: "none", md: "flex" }}
+                justifyContent="space-between"
+                height="48px"
+                alignItems="center"
+            >
+                <NavItem
+                    authorization="guest"
+                    component={() => { }}
+                    icon={<FiArrowLeft />}
+                    itemLabel="back"
+                    path=""
+                    isLoading={isLoading}
+                />
+                <NavItem
+                    authorization="guest"
+                    component={() => { }}
+                    icon={<MdOutlineDelete color={"var(--chakra-colors-red-700)"} />}
+                    itemLabel="back"
+                    path=""
+                    isLoading={isLoading}
+                />
+            </Flex>
             <Form
                 ref={formRef}
                 onChange={debounce}
