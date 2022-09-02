@@ -101,11 +101,17 @@ NewItem.Task = () => {
             </ScaleFade>
             <ScaleFade initialScale={0.9} unmountOnExit={true} in={!isOpen} delay={{ enter: clickedCancel ? 0.400 : 0 }}>
                 <Box
+                    cursor="pointer"
                     height="40px"
                     border="1px solid"
-                    borderColor="gray.600"
+                    borderColor="gray.700"
                     borderRadius="1rem"
                     onClick={onToggle}
+                    color="gray.700"
+                    _hover={{
+                        borderColor: "var(--chakra-colors-gray-600)",
+                        color: "var(--chakra-colors-gray-600)"
+                    }}
                 >
                     <HiOutlinePlus size={40} />
                 </Box>
