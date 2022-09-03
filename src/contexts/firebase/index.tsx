@@ -1,9 +1,9 @@
 import { firestore } from "@services/firebase";
-import { loginAccount, getAccount } from "@services/firebase/account/get";
+import { getAccount, loginAccount } from "@services/firebase/account/get";
 import snapshotNotes from "@services/firebase/notes/onSnapshot";
 import snapshotTasks from "@services/firebase/tasks/onSnapshot";
 import { Unsubscribe } from "firebase/firestore";
-import { createContext, ReactNode, useEffect, useRef, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 export interface Task {
     id: string;
     content: string;
@@ -103,6 +103,7 @@ interface AccountContext {
     };
     isLogged: boolean;
     login: (username: string) => Promise<boolean>;
+    logout: () => Promise<void>;
 }
 
 const accountDefaultValues: AccountContext = {
@@ -119,6 +120,7 @@ const accountDefaultValues: AccountContext = {
     },
     isLogged: false,
     login: async (username: string) => true,
+    logout: async () => {},
 }
 
 export const AccountContext = createContext<AccountContext>(accountDefaultValues);
@@ -139,6 +141,12 @@ export const AccountProvider = ({ children }: FirebaseProps) => {
         }
         updateAccount(oldState => ({ ...oldState, loading: false }));
         return false;
+    }
+
+    async function logout() {
+        localStorage.removeItem("orange-note_local-account-id");
+        updateLogginState(false);
+        updateAccount({ data: { id: "", username: "guest", challengers: 0, level: 0, xp: 0 }, loading: false });
     }
 
     async function reload() {
@@ -166,6 +174,7 @@ export const AccountProvider = ({ children }: FirebaseProps) => {
             currentAccount,
             isLogged,
             login,
+            logout,
         }}
     >
         {children}

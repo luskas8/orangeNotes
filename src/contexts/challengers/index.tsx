@@ -57,9 +57,12 @@ export function ChallengersProvider({ children, ...rest }: ChallengersProviderPr
         Cookies.set('currentExperience', String(currentExperience))
         Cookies.set('challengersCompleted', String(challengersCompleted))
         if (
-            level !== currentAccount.data.level ||
-            currentExperience !== currentAccount.data.xp ||
-            challengersCompleted !== currentAccount.data.challengers
+            currentAccount.data.id !== "" &&
+            (
+                level !== currentAccount.data.level ||
+                currentExperience !== currentAccount.data.xp ||
+                challengersCompleted !== currentAccount.data.challengers
+            )
         ) {
             const data: Account = {
                 level,

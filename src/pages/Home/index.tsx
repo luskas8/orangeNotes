@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 
 export const Home = () => {
     const navigate = useNavigate();
-    const { login, isLogged, currentAccount } = useAccount();
+    const { login, logout, isLogged, currentAccount } = useAccount();
     const formRef = useRef<FormHandles>(null);
 
     const initialData = {
@@ -60,7 +60,7 @@ export const Home = () => {
                     }}
                     isLoading={currentAccount.loading}
                     type="button"
-                    // onClick={handleSubmit}
+                    onClick={logout}
                 >
                     {"loggout"}
                 </Button>
