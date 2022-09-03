@@ -55,6 +55,10 @@ export const EditNote = () => {
     }
 
     async function saveData(data: FormProps) {
+        if (data.title === "" && data.content === "") {
+            return;
+        }
+
         updateLoading(true)
         await updateNote(data)
         updateLoading(false)
