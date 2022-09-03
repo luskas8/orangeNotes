@@ -10,6 +10,12 @@ interface NewTask {
 export default async function addTask(task: NewTask) {
     const taskRef = collection(firestore, 'tasks');
 
+    if (task.content === "") {
+        // not create task if it is empty
+        return;
+    }
+
+
     const addedTask = (await addDoc(taskRef, { ...task, timestamp: serverTimestamp() })).withConverter(tasksConverter);
 
     return addedTask.id;
