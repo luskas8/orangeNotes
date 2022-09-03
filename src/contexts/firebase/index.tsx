@@ -91,6 +91,7 @@ export interface Account {
     username: string;
     level: number;
     xp: number;
+    challengers: number;
 }
 
 interface AccountContext {
@@ -111,6 +112,7 @@ const accountDefaultValues: AccountContext = {
             username: "guest",
             level: 0,
             xp: 0,
+            challengers: 0,
         },
         loading: false
     },

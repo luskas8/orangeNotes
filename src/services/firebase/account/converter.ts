@@ -8,6 +8,7 @@ const accountConverter = {
             username: account.username,
             level: account.level,
             xp: account.xp,
+            challengers: account.challengers,
         }
     },
     fromFirestore: (snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Account => {
@@ -17,6 +18,7 @@ const accountConverter = {
             username: data.username,
             level: data.level,
             xp: data.xp,
+            challengers: data.challengers,
         }
     }
 }

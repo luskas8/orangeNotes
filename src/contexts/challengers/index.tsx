@@ -2,6 +2,7 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { LevelUpModal } from '@components/LevelUpModal'
+import { useAccount } from '@hooks'
 
 interface ChallengersProviderProps {
     children: ReactNode
@@ -34,9 +35,10 @@ interface ChallengersContextData {
 export const ChallengersContext = createContext({} as ChallengersContextData)
 
 export function ChallengersProvider({ children, ...rest }: ChallengersProviderProps) {
-    const [level, setLevel] = useState(rest.level ?? 1)
-    const [currentExperience, setCurrentExperience] = useState(rest.currentExperience ?? 0)
-    const [challengersCompleted, setChallengersCompleted] = useState(rest.challengersCompleted ?? 0)
+    const { currentAccount } = useAccount();
+    const [level, setLevel] = useState(currentAccount.data.level)
+    const [currentExperience, setCurrentExperience] = useState(currentAccount.data.xp)
+    const [challengersCompleted, setChallengersCompleted] = useState(currentAccount.data.challengers)
 
     const [activeChallenger, setActiveChallenger] = useState<Challenger>({ type: "challenger", description: "new challenger", amount: 18 })
     const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false)
