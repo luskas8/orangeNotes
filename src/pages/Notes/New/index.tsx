@@ -9,6 +9,7 @@ import updateNote from "@services/firebase/notes/update";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FiArrowLeft } from "react-icons/fi";
 
 export interface FormProps {
@@ -21,6 +22,7 @@ export const NewNote = () => {
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
     const [currentID, setID] = useState<string | null>(null);
     const formRef = useRef<FormHandles>(null);
+    const { t } = useTranslation('translation');
     const { registerNavItens } = useNavigation();
 
     function saveLocal(data: Note) {
@@ -56,7 +58,7 @@ export const NewNote = () => {
         if (currentID) {
             await updateNote({ id: currentID, ...data })
         } else {
-            setID(await addNote(data));
+            setID(await addNote(data) || "");
         }
         updateLoading(false);
     }
@@ -100,10 +102,12 @@ export const NewNote = () => {
                 <Input
                     name="title"
                     _focusVisible={{}}
+                    placeholder={t('title')}
                 />
                 <Textarea
                     height="100%"
                     _focusVisible={{}}
+                    placeholder={t('note_typing')}
                     name="content"
                 />
             </Form>

@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Input, ScaleFade, useDisclosure } from "@chakra-ui/react";
 import addTask from "@services/firebase/tasks/add";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { BiCheck } from "react-icons/bi";
 import { HiOutlinePlus } from "react-icons/hi";
 import { VscClose } from "react-icons/vsc";
@@ -47,6 +48,7 @@ NewItem.Task = () => {
     const [content, updateContent] = useState<string>("");
     const [clickedCancel, updateState] = useState<boolean>(false);
     const { isOpen, onToggle } = useDisclosure();
+    const { t } = useTranslation('translation');
 
     const createItem = async () => {
         await addTask({ completed: false, content })
@@ -84,6 +86,7 @@ NewItem.Task = () => {
                         padding="0 0.5rem"
                         value={content}
                         onChange={e => updateContent(e.target.value)}
+                        placeholder={t('task_typing')}
                     />
                     <Button
                         boxSize="40px"

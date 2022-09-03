@@ -1,5 +1,8 @@
 {
     "search_notes": "Search notes",
     "search_tasks": "Search for tasks",
-    "back": "Go back"
+    "back": "Go back",
+    "title": "Title",
+    "note_typing": "Start typing",
+    "task_typing": "Describe this task"
 }

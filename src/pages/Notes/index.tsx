@@ -21,7 +21,9 @@ export const Notes = () => {
         let list: Note[] = [];
         if (search !== "") {
             notes.forEach(note => {
-                if (note.title.toLocaleLowerCase().includes(search) || note.content.toLocaleLowerCase().includes(search)) {
+                let titleLower = note.title ? note.title.toLocaleLowerCase() : ""
+                let contentLower = note.content ? note.content.toLocaleLowerCase() : ""
+                if (titleLower.includes(search) || contentLower.includes(search)) {
                     list.push(note)
                 }
             })
@@ -53,7 +55,8 @@ export const Notes = () => {
                     !!search.length &&
                     <Flex justifyContent="center" boxSize="100%">
                         <Container w="fit-content">No data</Container>
-                    </Flex>}
+                    </Flex>
+                }
                 {!search.length && notes.map(note => <NoteItem key={note.id} {...note} />)}
             </SimpleGrid>
             <NewItem to="/notes/new" />

@@ -1,5 +1,8 @@
 {
     "search_notes": "Buscar notas",
     "search_tasks": "Buscar tareas",
-    "back": "Regresa"
+    "back": "Regresa",
+    "title": "Título",
+    "note_typing": "Empezar a escribir",
+    "task_typing": "Describir esta tarea"
 }

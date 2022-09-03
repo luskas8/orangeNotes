@@ -9,6 +9,7 @@ import updateNote from "@services/firebase/notes/update";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FiArrowLeft } from "react-icons/fi";
 import { MdOutlineDelete } from "react-icons/md";
 import { useParams } from "react-router-dom";
@@ -26,6 +27,7 @@ export const EditNote = () => {
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
     const [isLoading, updateLoading] = useState<boolean>(false);
     const formRef = useRef<FormHandles>(null);
+    const { t } = useTranslation('translation');
 
     function saveLocal(data: Note) {
         localStorage.setItem("orange-note_local-note-title", data.title);
@@ -134,9 +136,11 @@ export const EditNote = () => {
             >
                 <Input
                     name="title"
+                    placeholder={t('title')}
                 />
                 <Textarea
                     name="content"
+                    placeholder={t('note_typing')}
                 />
             </Form>
         </Box>
