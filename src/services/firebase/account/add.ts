@@ -9,6 +9,7 @@ export default async function addAccount(username: string) {
         username: username,
         level: 0,
         xp: 0,
+        challengers: 0,
     }
 
     const addedNote = (await addDoc(noteRef, { ...data, timestamp: serverTimestamp() })).withConverter(accountConverter);

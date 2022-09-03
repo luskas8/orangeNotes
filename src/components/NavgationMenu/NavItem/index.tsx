@@ -21,7 +21,7 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact, isLoadi
     const isActive = path === pathname;
 
     if (authorization === "user" && !isLogged) {
-        return;
+        return null;
     }
 
     async function handleItemClick(e: MouseEvent<HTMLButtonElement>) {
