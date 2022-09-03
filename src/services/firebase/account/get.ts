@@ -7,7 +7,7 @@ import accountConverter from "./converter";
 export async function loginAccount(username: string) {
     const docRef = query(collection(firestore, "accounts").withConverter(accountConverter), where('username', '==', username));
     const docSnap = await getDocs(docRef);
-    let result: Account = { id: "", username: "", level: 0, xp: 0 };
+    let result: Account = { id: "", username: "", level: 0, xp: 0, challengers: 0 };
     docSnap.forEach(doc => {
         result = doc.data()
     })
