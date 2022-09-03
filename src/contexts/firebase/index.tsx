@@ -92,6 +92,7 @@ export interface Account {
     level: number;
     xp: number;
     challengers: number;
+    timestamp?: number | string;
 }
 
 interface AccountContext {

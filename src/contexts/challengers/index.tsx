@@ -3,6 +3,8 @@ import React, { createContext, ReactNode, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { LevelUpModal } from '@components/LevelUpModal'
 import { useAccount } from '@hooks'
+import updateAccount from '@services/firebase/account/update'
+import { Account } from '@contexts/firebase'
 
 interface ChallengersProviderProps {
     children: ReactNode
@@ -54,6 +56,21 @@ export function ChallengersProvider({ children, ...rest }: ChallengersProviderPr
         Cookies.set('level', String(level))
         Cookies.set('currentExperience', String(currentExperience))
         Cookies.set('challengersCompleted', String(challengersCompleted))
+        if (
+            level !== currentAccount.data.level ||
+            currentExperience !== currentAccount.data.xp ||
+            challengersCompleted !== currentAccount.data.challengers
+        ) {
+            const data: Account = {
+                level,
+                xp: currentExperience,
+                challengers: challengersCompleted,
+                id: currentAccount.data.id,
+                username: currentAccount.data.username,
+            };
+
+            updateAccount(data);
+        }
     }, [level, currentExperience, challengersCompleted])
 
     function levelUp() {

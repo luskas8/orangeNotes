@@ -2,9 +2,12 @@
 import { ChallengersContext } from '@contexts'
 import { CountdownContext } from '@contexts/countdown'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from '../styles/components/Countdown.module.css'
 
 export function Coutdown() {
+    const { t } = useTranslation('translation');
+
     const { minutes, seconts, hasFinished, isActive, resetCountdown, startCountdown } = useContext(CountdownContext)
     const { completeChallenger } = useContext(ChallengersContext);
 
@@ -29,7 +32,7 @@ export function Coutdown() {
                 hasFinished
                     ? (
                         <button type="button" className={`${styles.countdownButton}`} onClick={() => completeChallenger()}>
-                            Ciclo encerado
+                            {t('end_time')}
                         </button>
                     )
                     : (
@@ -38,12 +41,12 @@ export function Coutdown() {
                                 !isActive
                                     ? (
                                         <button type="button" className={`${styles.countdownButton} ${styles.newCyclo}`} onClick={startCountdown}>
-                                            Iniciar novo ciclo
+                                            {t('start_counter')}
                                         </button>
                                     )
                                     : (
                                         <button type="button" className={`${styles.countdownButton} ${styles.quitCyclo}`} onClick={resetCountdown}>
-                                            Abandonar ciclo
+                                             {t('abandon_counter')}
                                         </button>
                                     )
                             }

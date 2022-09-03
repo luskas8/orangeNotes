@@ -4,5 +4,10 @@
     "back": "Go back",
     "title": "Title",
     "note_typing": "Start typing",
-    "task_typing": "Describe this task"
+    "task_typing": "Describe this task",
+    "completed_challengers": "Completed challengers",
+    "level": "Level",
+    "start_counter": "Start counter",
+    "abandon_counter": "Close counter",
+    "end_time": "Time is over"
 }

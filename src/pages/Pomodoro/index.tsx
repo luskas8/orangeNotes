@@ -16,6 +16,7 @@ export const Pomodoro = () => {
             unsubscribers.forEach(unsubscribe => unsubscribe());
         }
     }, [])
+
     return (
         <ChallengersProvider
             level={0}

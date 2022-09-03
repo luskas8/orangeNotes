@@ -4,5 +4,10 @@
     "back": "Regresa",
     "title": "Título",
     "note_typing": "Empezar a escribir",
-    "task_typing": "Describir esta tarea"
+    "task_typing": "Describir esta tarea",
+    "completed_challengers": "Desafíos completos",
+    "level": "Nivel",
+    "start_counter": "Contador de inicio",
+    "abandon_counter": "Contador de inicio",
+    "end_time": "El tiempo se acabo"
 }

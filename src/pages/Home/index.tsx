@@ -50,6 +50,21 @@ export const Home = () => {
                     </Button>
                 </Form>
             </Box>
+            <Box display={!isLogged ? "none" : "inherit"} color="white" as="section">
+                <Button
+                    marginTop="1.25rem"
+                    width="100%"
+                    background="red.700"
+                    _hover={{
+                        background: "red.600"
+                    }}
+                    isLoading={currentAccount.loading}
+                    type="button"
+                    // onClick={handleSubmit}
+                >
+                    {"loggout"}
+                </Button>
+            </Box>
             <Box as="section">
                 <h1>how to use</h1>
             </Box>
