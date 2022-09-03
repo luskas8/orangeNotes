@@ -26,6 +26,7 @@ export const EditNote = () => {
     const currentID = params.noteId!;
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
     const [isLoading, updateLoading] = useState<boolean>(false);
+    const [inicialData, updateInicialData] = useState<Note | null>(null);
     const formRef = useRef<FormHandles>(null);
     const { t } = useTranslation('translation');
 
@@ -41,9 +42,21 @@ export const EditNote = () => {
         return { id: currentID, title: data.title, content: data.content };
     }
 
+    function needsUpdate(data: Note) {
+        if (
+            data.title === inicialData!.title &&
+            data.content === inicialData!.content
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
     function debounce() {
         const data = converter();
         saveLocal(data);
+        localStorage.setItem("orange-note_local-note-update", needsUpdate(data) ? "true" : "false");
 
         if (timeoutID) {
             clearTimeout(timeoutID);
@@ -59,15 +72,16 @@ export const EditNote = () => {
             return;
         }
 
+        // if not needs to update the note, ignore this
+        if (!needsUpdate(data)) {
+            return;
+        }
+
         updateLoading(true)
         await updateNote(data)
+        updateInicialData({...data})
+        localStorage.setItem("orange-note_local-note-update", "false");
         updateLoading(false)
-    }
-
-    const inicialData: FormProps = {
-        id: currentID,
-        title: "",
-        content: "",
     }
 
     useEffect(() => {
@@ -80,7 +94,9 @@ export const EditNote = () => {
             (async function fetchNote() {
                 let data = await getNote(currentID);
                 formRef.current?.setData({ ...data })
+                updateInicialData({...data!});
                 saveLocal(data!)
+                localStorage.setItem("orange-note_local-note-update", "false");
             })();
             updateLoading(false);
         }
@@ -136,7 +152,7 @@ export const EditNote = () => {
                 ref={formRef}
                 onChange={debounce}
                 onSubmit={() => { }}
-                initialData={inicialData}
+                initialData={inicialData!}
             >
                 <Input
                     name="title"

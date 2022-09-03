@@ -20,6 +20,13 @@ export default async function levingNote() {
     localStorage.removeItem("orange-note_local-note-content");
     localStorage.removeItem("orange-note_local-note-id");
 
+    const needUpdateNote = localStorage.getItem("orange-note_local-note-update");
+
+    // if not needs to update note, just ignore
+    if (needUpdateNote === "false") {
+        return;
+    }
+
     // Check if the note has an ID
     if (data.id !== "") {
         // If the note is full empty delete it
