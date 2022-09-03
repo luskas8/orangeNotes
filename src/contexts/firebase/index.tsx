@@ -3,7 +3,7 @@ import { loginAccount, getAccount } from "@services/firebase/account/get";
 import snapshotNotes from "@services/firebase/notes/onSnapshot";
 import snapshotTasks from "@services/firebase/tasks/onSnapshot";
 import { Unsubscribe } from "firebase/firestore";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 export interface Task {
     id: string;
     content: string;
@@ -58,28 +58,28 @@ export interface Note {
 }
 interface NoteContext {
     myNotes: Note[]
-    unsubscribe: Unsubscribe;
+    unsubscribers: Unsubscribe[];
 }
 
 const noteDefaultValue: NoteContext = {
     myNotes: [],
-    unsubscribe: () => { },
+    unsubscribers: [],
 }
 
 export const NoteContext = createContext<NoteContext>(noteDefaultValue);
 
 export const NoteProvider = ({ children }: FirebaseProps) => {
     const [myNotes, updateState] = useState<Note[]>(noteDefaultValue.myNotes);
-    let unsubscribe = () => { };
+    let unsubscribers: Unsubscribe[] = [];
 
     useEffect(() => {
-        unsubscribe = snapshotNotes(firestore, updateState);
+        unsubscribers.push(snapshotNotes(firestore, updateState));
     }, []);
 
     return <NoteContext.Provider
         value={{
             myNotes,
-            unsubscribe,
+            unsubscribers,
         }}
     >
         {children}
