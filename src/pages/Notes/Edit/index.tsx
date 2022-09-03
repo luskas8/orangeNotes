@@ -143,7 +143,7 @@ export const EditNote = () => {
                     authorization="guest"
                     component={() => { }}
                     icon={<MdOutlineDelete color={"var(--chakra-colors-red-700)"} />}
-                    itemLabel="back"
+                    itemLabel="delete"
                     path=""
                     isLoading={isLoading}
                 />

@@ -1,18 +1,18 @@
 import { Container, Flex, SimpleGrid } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
-import { Note } from "@contexts";
-import { useFirebase } from "@hooks";
+import { Note, NoteProvider } from "@contexts";
+import { useAccount, useNote } from "@hooks";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet, useOutlet } from "react-router-dom";
 
-export const Notes = () => {
+const Notes = () => {
     const [filteredNotes, updateFilter] = useState<Note[]>([]);
     const [search, updateSearch] = useState<string>("");
-    const { notes } = useFirebase();
+    const { currentID } = useAccount();
+    const { myNotes } = useNote();
     const { t } = useTranslation('translation');
     const inChildRoute = useOutlet();
-
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
         updateSearch(e.target.value);
     }
@@ -20,7 +20,7 @@ export const Notes = () => {
     useEffect(() => {
         let list: Note[] = [];
         if (search !== "") {
-            notes.forEach(note => {
+            myNotes.forEach(note => {
                 let titleLower = note.title ? note.title.toLocaleLowerCase() : ""
                 let contentLower = note.content ? note.content.toLocaleLowerCase() : ""
                 if (titleLower.includes(search) || contentLower.includes(search)) {
@@ -57,10 +57,18 @@ export const Notes = () => {
                         <Container w="fit-content">No data</Container>
                     </Flex>
                 }
-                {!search.length && notes.map(note => <NoteItem key={note.id} {...note} />)}
+                {!search.length && myNotes.filter(note => note.owner == currentID).map(note => <NoteItem key={note.id} {...note} />)}
             </SimpleGrid>
             <NewItem to="/notes/new" />
         </Container>
+    )
+}
+
+export const NotePage = () => {
+    return (
+        <NoteProvider>
+            <Notes />
+        </NoteProvider>
     )
 }
 

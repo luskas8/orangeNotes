@@ -40,6 +40,7 @@ export default async function levingNote() {
             // not create the task if it is empty
             return
         }
+
         await addNote({ title: data.title,content: data.content });
     }
 }

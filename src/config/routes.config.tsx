@@ -1,6 +1,4 @@
-import { EditNote, NewNote, Notes } from "@pages/Notes";
-import { Pomodoro } from "@pages/Pomodoro";
-import { Tasks } from "@pages/Tasks";
+import { Home, EditNote, NewNote, NotePage, Pomodoro, Tasks } from "@pages";
 import { NavItensProps } from "@types";
 import { CgCheckR, CgSandClock } from "react-icons/cg";
 import { FaGlobeAmericas, FaRegStickyNote } from "react-icons/fa";
@@ -9,7 +7,7 @@ export const routes: NavItensProps[] = [
     {
         path: "/",
         isExact: true,
-        component: () => <Pomodoro/>,
+        component: () => <Home />,
         itemLabel: "Index",
         icon: <FaGlobeAmericas />,
         authorization: "guest",
@@ -23,7 +21,7 @@ export const routes: NavItensProps[] = [
     },
     {
         path: "/notes",
-        component: () => <Notes />,
+        component: () => <NotePage />,
         itemLabel: "notes",
         icon: <FaRegStickyNote />,
         authorization: "user",
@@ -53,5 +51,4 @@ export const routes: NavItensProps[] = [
         icon: <CgCheckR />,
         authorization: "user",
     },
-
 ]

@@ -12,12 +12,8 @@ export interface NavItemProps extends HTMLProps<HTMLDivElement>, NavItensProps {
 }
 
 export const NavItem = ({ itemLabel, icon, authorization, path, isExact, isLoading }: NavItemProps) => {
-    if (isExact) {
-        return null;
-    }
-
     const [itemIsLoading, updateLoadingState] = useState<boolean>(false);
-    const { usingLeavingPage, useLeavingPage } = useLeavingGuard();
+    const { useLeavingPage } = useLeavingGuard();
     const { pathname } = useLocation();
     const navigate = useNavigate();
     const { setParam } = useNavigation();
@@ -28,24 +24,25 @@ export const NavItem = ({ itemLabel, icon, authorization, path, isExact, isLoadi
             return;
         }
         if (itemLabel === "back") {
-                setParam("")
-                useLeavingPage(false);
-                levingNote();
+            setParam("")
+            useLeavingPage(false);
+            levingNote();
             navigate(-1);
             return;
         }
         if (itemLabel === "delete") {
             updateLoadingState(true);
             const id = localStorage.getItem("orange-note_local-note-id") || "";
+
             if (id !== "") {
                 await deleteNote(id);
             }
+
             updateLoadingState(false);
             setParam("")
-            navigate(path);
+            navigate("/notes");
             return;
         }
-
 
         navigate(path);
     }

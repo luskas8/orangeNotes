@@ -6,6 +6,7 @@ import deleteNote from "./delete";
 
 export default async function updateNote(note: Note) {
     const noteRef = doc(firestore, 'notes', note.id).withConverter(notesConverter);
+    const accountID = localStorage.getItem("orange-note_local-account-id") || "";
 
     const data = {
         title: note.title,
@@ -13,7 +14,7 @@ export default async function updateNote(note: Note) {
         timestamp: serverTimestamp(),
     }
 
-    if (data.title === "" && data.content === "") {
+    if (data.title === "" && data.content === "" || accountID === "") {
         await deleteNote(note.id);
         return;
     }

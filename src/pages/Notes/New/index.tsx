@@ -21,6 +21,7 @@ export const NewNote = () => {
     const [isLoading, updateLoading] = useState<boolean>(false);
     const [timeoutID, updateTimeoutID] = useState<NodeJS.Timeout | null>(null);
     const [currentID, setID] = useState<string | null>(null);
+    const [inicialData, updateInicialData] = useState<FormProps>({ title: "", content: "" });
     const formRef = useRef<FormHandles>(null);
     const { t } = useTranslation('translation');
     const { registerNavItens } = useNavigation();
@@ -34,6 +35,17 @@ export const NewNote = () => {
         }
     }
 
+    function needsUpdate(data: FormProps) {
+        if (
+            data.title === inicialData!.title &&
+            data.content === inicialData!.content
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
     function converter(): Note | FormProps {
         let data: any = formRef.current?.getData();
 
@@ -43,6 +55,7 @@ export const NewNote = () => {
     function debounce() {
         const data = converter();
         saveLocal({ id: currentID || "", ...data });
+        localStorage.setItem("orange-note_local-note-update", needsUpdate(data) ? "true" : "false");
 
         if (timeoutID) {
             clearTimeout(timeoutID);
@@ -54,18 +67,20 @@ export const NewNote = () => {
     }
 
     async function saveData(data: FormProps) {
+        // if not needs to update the note, ignore this
+        if (!needsUpdate(data)) {
+            return;
+        }
+
         updateLoading(true);
         if (currentID) {
             await updateNote({ id: currentID, ...data })
         } else {
             setID(await addNote(data) || "");
         }
+        updateInicialData({ ...data })
+        localStorage.setItem("orange-note_local-note-update", "false");
         updateLoading(false);
-    }
-
-    const inicialData: FormProps = {
-        title: "",
-        content: "",
     }
 
     useEffect(() => {
@@ -80,6 +95,10 @@ export const NewNote = () => {
             }
         ])
     }, [isLoading])
+
+    useEffect(() => {
+        localStorage.setItem("orange-note_local-note-update", "true");
+    })
 
     return (
         <Box padding={{ md: "1.5rem 0" }} color={"white"} width="100%">
