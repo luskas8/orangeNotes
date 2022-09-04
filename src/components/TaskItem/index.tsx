@@ -2,11 +2,13 @@ import { Box, Button, Flex, GridItem } from "@chakra-ui/react";
 import { Checkbox } from "@components/Checkbox";
 import { Input } from "@components/Input";
 import { Task } from "@contexts";
+import deleteTask from "@services/firebase/tasks/delete";
 import updateTask from "@services/firebase/tasks/update";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import { useRef, useState } from "react";
 import { BiCheck } from "react-icons/bi";
+import { MdOutlineDelete } from "react-icons/md";
 import { VscClose } from "react-icons/vsc";
 
 interface FormProps {
@@ -55,6 +57,12 @@ export const TaskItem = (task: Task) => {
         updateEditingState(false);
     }
 
+    const handleDelete = async () => {
+        updateDeletingState(true);
+        await deleteTask(inicialData.id);
+        updateDeletingState(false);
+    }
+
     return (
         <GridItem
             key={task.id}
@@ -85,6 +93,7 @@ export const TaskItem = (task: Task) => {
                     <Checkbox
                         color={inicialData.completed ? "gray.600" : "inherit"}
                         isDisabled={isSaving || isDeleting || isEditing}
+                        defaultChecked={inicialData.completed}
                         name="completed"
                     />
                     <Input
@@ -99,9 +108,23 @@ export const TaskItem = (task: Task) => {
                 </Flex>
                 <Box display="flex" gap="6px">
                     <Button
+                        boxSize="32px"
+                        padding="0.5rem"
+                        isDisabled={isDeleting}
+                        hidden={!isHidden}
+                        onClick={handleDelete}
+                        type="button"
+                        bg="red.700"
+                        _hover={{
+                            bg: "var(--chakra-colors-red-600)"
+                        }}
+                    >
+                        <MdOutlineDelete />
+                    </Button>
+                    <Button
                         boxSize="40px"
                         padding="0.5rem"
-                        isDisabled={isSaving || isDeleting}
+                        isDisabled={isSaving}
                         hidden={isHidden}
                         type="submit"
                         bg="whatsapp.700"
@@ -114,7 +137,7 @@ export const TaskItem = (task: Task) => {
                     <Button
                         boxSize="40px"
                         padding="0.5rem"
-                        isDisabled={isSaving || isDeleting}
+                        isDisabled={isSaving }
                         onClick={handleReset}
                         hidden={isHidden}
                         type="button"

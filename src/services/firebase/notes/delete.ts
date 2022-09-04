@@ -1,4 +1,3 @@
-import { Note } from "@contexts";
 import { deleteDoc, doc } from "firebase/firestore";
 import { firestore } from "..";
 

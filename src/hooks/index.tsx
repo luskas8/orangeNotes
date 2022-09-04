@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BreakpointContext } from "@contexts/breakpoint";
-import { FirebaseContext } from "@contexts/firebase";
+import { AccountContext, FirebaseContext, NoteContext } from "@contexts/firebase";
 import { NavigationContext } from "@contexts/navigation";
 import { LeavingGuardContext } from "@contexts";
 
@@ -9,6 +9,26 @@ export const useFirebase = () => {
 
     if (!context) {
         throw "Firebase cannot be used, please try again later!";
+    }
+
+    return context;
+}
+
+export const useAccount = () => {
+    const context = useContext(AccountContext);
+
+    if (!context) {
+        throw "Account cannot be used, please try again later!";
+    }
+
+    return context;
+}
+
+export const useNote = () => {
+    const context = useContext(NoteContext);
+
+    if (!context) {
+        throw "Note cannot be accessed, please try again later!";
     }
 
     return context;

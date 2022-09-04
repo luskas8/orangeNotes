@@ -55,9 +55,10 @@ export function Input({ name, type, label, value, ...rest }: InputProps) {
 
     return (
         <Box width={type !== "hidden" ? "100%" : ""}>
-            {/* <label htmlFor={fieldName}>{label}</label> */}
+            {label && <label htmlFor={fieldName}>{label}</label>}
 
             <ChakraInput
+                marginTop={label ? "1rem" : "0"}
                 type={type || "text"}
                 id={fieldName}
                 ref={inputRef}

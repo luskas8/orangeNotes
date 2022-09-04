@@ -1,23 +1,20 @@
 import { firestore } from "@services/firebase";
+import { getAccount, loginAccount } from "@services/firebase/account/get";
 import snapshotNotes from "@services/firebase/notes/onSnapshot";
 import snapshotTasks from "@services/firebase/tasks/onSnapshot";
+import { Unsubscribe } from "firebase/firestore";
 import { createContext, ReactNode, useEffect, useState } from "react";
-export interface Note {
-    id: string;
-    title: string;
-    content: string;
-    timestamp?: number | string;
-}
-
 export interface Task {
     id: string;
     content: string;
     completed: boolean;
     timestamp?: number | string;
 }
+interface TaskContext {
+    tasks: Task[];
+}
 
 interface FirebaseContextProps {
-    notes: Note[];
     tasks: Task[];
 }
 interface FirebaseProps {
@@ -25,11 +22,6 @@ interface FirebaseProps {
 }
 
 const defaultValues: FirebaseContextProps = {
-    notes: [
-        // { content: "sdjsdaksjkd", title: "Test 1", id: "348348394" },
-        // { content: "asldakoaoa", title: "Test 2", id: "saskasosaoa" },
-        // { content: "apoapoaoskdjdjdj", title: "Test 3", id: "348348394aososo" },
-    ],
     tasks: [
         // { content: "sdjsdaksjkd", completed: true, id: "348348394" },
         // { content: "asldakoaoa", completed: false, id: "saskasosaoa" },
@@ -40,18 +32,15 @@ const defaultValues: FirebaseContextProps = {
 export const FirebaseContext = createContext<FirebaseContextProps>(defaultValues);
 
 export const FirebaseProvider = ({ children }: FirebaseProps) => {
-    const [notes, updateNotes] = useState<Note[]>(defaultValues.notes);
     const [tasks, updateTasks] = useState<Task[]>(defaultValues.tasks);
 
     useEffect(() => {
-        snapshotNotes(firestore, updateNotes);
         snapshotTasks(firestore, updateTasks);
     });
 
     return (
         <FirebaseContext.Provider
             value={{
-                notes,
                 tasks,
             }}
         >
@@ -59,3 +48,135 @@ export const FirebaseProvider = ({ children }: FirebaseProps) => {
         </FirebaseContext.Provider>
     );
 };
+
+export interface Note {
+    id: string;
+    title: string;
+    content: string;
+    timestamp?: number | string;
+    owner?: string;
+}
+interface NoteContext {
+    myNotes: Note[]
+    unsubscribers: Unsubscribe[];
+}
+
+const noteDefaultValue: NoteContext = {
+    myNotes: [],
+    unsubscribers: [],
+}
+
+export const NoteContext = createContext<NoteContext>(noteDefaultValue);
+
+export const NoteProvider = ({ children }: FirebaseProps) => {
+    const [myNotes, updateState] = useState<Note[]>(noteDefaultValue.myNotes);
+    let unsubscribers: Unsubscribe[] = [];
+
+    useEffect(() => {
+        unsubscribers.push(snapshotNotes(firestore, updateState));
+    }, []);
+
+    return <NoteContext.Provider
+        value={{
+            myNotes,
+            unsubscribers,
+        }}
+    >
+        {children}
+    </NoteContext.Provider>
+}
+
+export interface Account {
+    id: string;
+    username: string;
+    level: number;
+    xp: number;
+    challengers: number;
+    timestamp?: number | string;
+}
+
+interface AccountContext {
+    currentID: string;
+    currentAccount: {
+        data: Account,
+        loading: boolean
+    };
+    isLogged: boolean;
+    login: (username: string) => Promise<boolean>;
+    logout: () => Promise<void>;
+}
+
+const accountDefaultValues: AccountContext = {
+    currentID: "",
+    currentAccount: {
+        data: {
+            id: "",
+            username: "guest",
+            level: 0,
+            xp: 0,
+            challengers: 0,
+        },
+        loading: false
+    },
+    isLogged: false,
+    login: async (username: string) => true,
+    logout: async () => {},
+}
+
+export const AccountContext = createContext<AccountContext>(accountDefaultValues);
+
+export const AccountProvider = ({ children }: FirebaseProps) => {
+    const [isLogged, updateLogginState] = useState<boolean>(false);
+    const [currentAccount, updateAccount] = useState<{ data: Account, loading: boolean }>(accountDefaultValues.currentAccount);
+
+    async function login(username: string) {
+        updateAccount(oldState => ({ ...oldState, loading: true }));
+        const account = await loginAccount(username)
+
+        if (account) {
+            localStorage.setItem("orange-note_local-account-id", account.id)
+            updateAccount({ data: account, loading: false });
+            updateLogginState(true)
+            return true
+        }
+        updateAccount(oldState => ({ ...oldState, loading: false }));
+        return false;
+    }
+
+    async function logout() {
+        localStorage.removeItem("orange-note_local-account-id");
+        updateLogginState(false);
+        updateAccount({ data: { id: "", username: "guest", challengers: 0, level: 0, xp: 0 }, loading: false });
+    }
+
+    async function reload() {
+        const accountID = localStorage.getItem("orange-note_local-account-id") || "";
+        if (accountID !== "") {
+            updateAccount(oldState => ({ ...oldState, loading: true }));
+            let account = await getAccount(accountID);
+
+            if (account) {
+                updateAccount({ data: account, loading: false });
+                updateLogginState(true)
+                return;
+            }
+
+            updateAccount(oldState => ({ ...oldState, loading: false }));
+        }
+    }
+
+    useEffect(() => {
+        reload()
+    }, [])
+    return <AccountContext.Provider
+        value={{
+            currentID: currentAccount.data.id,
+            currentAccount,
+            isLogged,
+            login,
+            logout,
+        }}
+    >
+        {children}
+    </AccountContext.Provider>
+}

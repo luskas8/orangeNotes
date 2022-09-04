@@ -1,5 +1,13 @@
 {
     "search_notes": "Pesquisar notas",
     "search_tasks": "Buscar por tarefas",
-    "back": "Voltar"
+    "back": "Voltar",
+    "title": "Título",
+    "note_typing": "Começe a digitar",
+    "task_typing": "Descreva esta tarefa",
+    "completed_challengers": "Desafios completos",
+    "level": "Nível",
+    "start_counter": "Iniciar contador",
+    "abandon_counter": "Encerrar contador",
+    "end_time": "Tempo acabou"
 }
