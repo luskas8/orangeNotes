@@ -7,21 +7,21 @@ import { theme } from "./theme";
 
 function App() {
     return (
-        <ChakraProvider theme={theme}>
-            <LeavingGuardProvider>
-                <AccountProvider>
-                    <FirebaseProvider>
-                        <BreakpointProvider>
-                            <Router>
+        <Router>
+            <ChakraProvider theme={theme}>
+                <LeavingGuardProvider>
+                    <AccountProvider>
+                        <FirebaseProvider>
+                            <BreakpointProvider>
                                 <NavigationProvider>
                                     <Platform />
                                 </NavigationProvider>
-                            </Router>
-                        </BreakpointProvider>
-                    </FirebaseProvider>
-                </AccountProvider>
-            </LeavingGuardProvider>
-        </ChakraProvider>
+                            </BreakpointProvider>
+                        </FirebaseProvider>
+                    </AccountProvider>
+                </LeavingGuardProvider>
+            </ChakraProvider>
+        </Router>
     )
 }
 
