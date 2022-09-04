@@ -1,6 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import { routes } from "@config/routes.config";
 import { AccountProvider, BreakpointProvider, FirebaseProvider, LeavingGuardProvider, NavigationProvider } from "@contexts";
-import { BrowserRouter as Router } from "react-router-dom";
+import { NavItensProps } from "@types";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Platform } from "./layouts/Platform";
 import './locates';
 import { theme } from "./theme";
@@ -14,6 +16,9 @@ function App() {
                         <FirebaseProvider>
                             <BreakpointProvider>
                                 <NavigationProvider>
+                                    <Routes>
+                                        {routes.map(createRoute)}
+                                    </Routes>
                                     <Platform />
                                 </NavigationProvider>
                             </BreakpointProvider>
@@ -22,6 +27,14 @@ function App() {
                 </LeavingGuardProvider>
             </ChakraProvider>
         </Router>
+    )
+}
+
+function createRoute(route: NavItensProps) {
+    return (
+        <Route key={route.path} path={route.path} element={<></>}>
+            {route.routes?.map(createRoute)}
+        </Route>
     )
 }
 
