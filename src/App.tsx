@@ -32,7 +32,7 @@ function App() {
 
 function createRoute(route: NavItensProps) {
     return (
-        <Route key={route.path} path={route.path} element={<></>}>
+        <Route key={route.path} path={route.path} element={<route.component {...route} />}>
             {route.routes?.map(createRoute)}
         </Route>
     )
