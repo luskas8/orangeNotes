@@ -12,7 +12,7 @@ export function Profile() {
             <div>
                 <strong>{currentAccount.data.username}</strong>
                 <p>
-                    <img src="../../assets/icons/level.svg" alt="Level" />
+                    <img src="assets/icons/level.svg" alt="Level" />
                     Level {level}
                 </p>
             </div>
