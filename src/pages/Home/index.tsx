@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Text } from "@chakra-ui/react"
+import { Box, Button, Center, Container, Flex, Text } from "@chakra-ui/react"
 import { Input } from "@components/Input"
 import { useAccount, useNote, useTask } from "@hooks"
 import { FormHandles } from "@unform/core"
@@ -7,9 +7,11 @@ import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { CgCheckR, CgSandClock } from "react-icons/cg";
 import { FaGlobeAmericas, FaRegStickyNote } from "react-icons/fa";
+import { useTranslation } from "react-i18next"
 
 export const Home = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation("translation");
     const { login, logout, isLogged, currentAccount } = useAccount();
     const formRef = useRef<FormHandles>(null);
 
@@ -17,13 +19,17 @@ export const Home = () => {
         username: ""
     }
 
-    const handleSubmit = async () => {
-        const { username } = formRef.current!.getData();
+    const handleSubmit = async (data: { username: string }) => {
+        const { username } = data;
 
+        if (!username || username === "") {
+            formRef.current?.setErrors({ 'username': t('required') })
+            return;
+        }
         if (await login(username)) {
             navigate('/pomodoro');
         } else {
-            formRef.current?.setErrors({ 'username': 'User not find' })
+            formRef.current?.setErrors({ 'username': t('notFound') })
         }
     }
 
@@ -42,12 +48,12 @@ export const Home = () => {
     return (
         <Container padding={{ base: "2rem 1.5rem", md: "2rem 0" }}>
             <Box display={isLogged ? "none" : "inherit"} color="white" as="section">
-                <Form ref={formRef} initialData={initialData} onChange={() => formRef.current?.setErrors({})} onSubmit={() => { }}>
+                <Form ref={formRef} initialData={initialData} onChange={() => formRef.current?.setErrors({})} onSubmit={handleSubmit}>
                     <Input
-                        label="Que tal explorar ainda mais o aplicativo? Coloque como se chama e fazemos a mágica"
+                        label={t('home_input_label')}
                         name="username"
                         _focusVisible={{}}
-                        placeholder={"username"}
+                        placeholder={t('home_input_placeholder')}
                     />
                     <Button
                         marginTop="1.25rem"
@@ -57,10 +63,9 @@ export const Home = () => {
                             background: "twitter.600"
                         }}
                         isLoading={currentAccount.loading}
-                        type="button"
-                        onClick={handleSubmit}
+                        type="submit"
                     >
-                        {"Pronto"}
+                        {t("ready")}
                     </Button>
                 </Form>
             </Box>
@@ -76,63 +81,62 @@ export const Home = () => {
                     type="button"
                     onClick={logout}
                 >
-                    {"loggout"}
+                    {t("logout")}
                 </Button>
             </Box>
-            <Box as="section" color="white">
-                <h1>how to use</h1>
+            <Box marginTop="1.5rem" as="section" color="white">
+                <Center as="h1" fontWeight="bold" fontSize="3xl">
+                    {t('howToUse')}
+                </Center>
                 <Box as="div" id="">
-                    <header><h1>Páginas</h1></header>
                     <main>
                         <Flex padding="6px 0" as="article" gap="6px" alignItems="flex-start" direction={"column"}>
                             <Flex as="header" gap="6px" alignItems="center">
                                 <Box boxSize="24px"><FaGlobeAmericas /></Box>
-                                <h2>Página inicial</h2>
+                                <h2>{t("homepage")}</h2>
                             </Flex>
                             <Box as="main" fontSize="sm" color="whiteAlpha.900">
-                                <Text align="justify">Onde você está, aqui pode entender melhor o funcionamento do aplicativo</Text>
-                                <Text align="justify">e ter algumas configuraões da conta</Text>
+                                <Text align="justify">{t("homepage_about")}</Text>
                             </Box>
                         </Flex>
                         <Flex marginTop="8px" padding="6px 0" borderTop="2px solid" borderTopColor="gray.500" as="article" gap="6px" alignItems="flex-start" direction={"column"}>
                             <Flex as="header" gap="6px" alignItems="center">
                                 <Box boxSize="24px"><CgSandClock /></Box>
-                                <h2>Relógio de Pomodoro</h2>
+                                <h2>{t("pomodoro")}</h2>
                             </Flex>
                             <Box as="main" fontSize="sm" color="whiteAlpha.900">
-                                <Text align="justify">Um relógio para te ajudar a focar em suas atividades do dia a dia</Text>
-                                <Text align="justify">Que tal dar uma olhada, e quem sabe não se interesse em ter uma conta conosco</Text>
+                                <Text align="justify">{t("pomodoro_about_1")}</Text>
+                                <Text align="justify">{t("pomodoro_about_2")}</Text>
                             </Box>
                         </Flex>
                         <Flex marginTop="8px" padding="6px 0" borderTop="2px solid" borderTopColor="gray.500" as="article" gap="6px" alignItems="flex-start" direction={"column"}>
                             <Flex as="header" gap="6px" alignItems="center">
                                 <Box boxSize="24px"><FaRegStickyNote /></Box>
-                                <h2>Bloco de notas</h2>
+                                <h2>{t("notes")}</h2>
                             </Flex>
                             <Box as="main" fontSize="sm" color="whiteAlpha.900">
-                                <Text align="justify">Que tal organizar suas ideias e anotações em bloquinhos para não se esquecer</Text>
-                                <Text align="justify">ou então anotar aquela receita</Text>
-                                <Text marginTop="3px" fontSize="smaller" align="justify" color="gray.600">*Necessário ter uma conta conosco</Text>
+                                <Text align="justify">{t("notes_about")}</Text>
+                                <Text marginTop="3px" fontSize="smaller" align="justify" color="gray.600">*{t('need_account')}</Text>
                             </Box>
                         </Flex>
                         <Flex marginTop="8px" padding="6px 0" borderTop="2px solid" borderTopColor="gray.500" as="article" gap="6px" alignItems="flex-start" direction={"column"}>
                             <Flex as="header" gap="6px" alignItems="center">
                                 <Box boxSize="24px"><CgCheckR /></Box>
-                                <h2>Lista de tarefas</h2>
+                                <h2>{t("tasks")}</h2>
                             </Flex>
                             <Box as="main" fontSize="sm" color="whiteAlpha.900">
-                                <Text align="justify">Organização de ideias legal, mas aqui que tal fazer aquela famosa lista de afazeres?</Text>
-                                <Text align="justify">Colocar aquelas metas para ter a satisfação de cumprir e marcar como <b>FEITO!</b>; as tarefas da escola, trabalho ou faculdade</Text>
-                                <Text align="justify" >então é <b><i>#AquiMesmo!</i></b></Text>
-                                <Text marginTop="3px" fontSize="smaller" align="justify" color="gray.600">*Necessário ter uma conta conosco</Text>
+                                <Text align="justify">{t("tasks_about_1")}</Text>
+                                <Text align="justify">{t("tasks_about_2.one")} <b>{t("tasks_about_2.two")}</b>{t("tasks_about_2.three")}</Text>
+                                <Text align="justify" >{t("tasks_about_3.one")} <b><i>{t("tasks_about_3.two")}</i></b></Text>
+                                <Text marginTop="3px" fontSize="smaller" align="justify" color="gray.600">*{t('need_account')}</Text>
                             </Box>
                         </Flex>
                         <Flex marginTop="8px" padding="6px 0" borderTop="2px solid" borderTopColor="gray.500" as="article" gap="6px" alignItems="flex-start" direction={"column"}>
                             <Flex as="header" gap="6px" alignItems="center">
-                                <Text as="h2" fontWeight="bold" color="yellow.400">Será que está salvo?</Text>
+                                <Text as="h2" fontWeight="bold" color="yellow.400">{t("save")}</Text>
                             </Flex>
                             <Box as="main" fontSize="sm" color="whiteAlpha.900">
-                                <Text align="justify">Salvamos conforme você vai digirando (isso mesmo, em tempo real), então sim está ficando salvo</Text>
+                                <Text align="justify">{t('save_about')}</Text>
                             </Box>
                         </Flex>
                     </main>

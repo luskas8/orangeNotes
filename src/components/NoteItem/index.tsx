@@ -1,4 +1,4 @@
-import { Box, Container } from "@chakra-ui/react"
+import { Box } from "@chakra-ui/react"
 import { Note } from "@contexts"
 import removeHTMLTags from "@utils/removeHTMLTags"
 import { useNavigate } from "react-router-dom"

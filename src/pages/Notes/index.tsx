@@ -1,7 +1,8 @@
-import { Container, Flex, SimpleGrid } from "@chakra-ui/react";
+import { Container, SimpleGrid } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
+import { NoData } from "@components/NoData";
 import { Note, NoteProvider } from "@contexts";
-import { useAccount, useNote, useTask } from "@hooks";
+import { useNote, useTask } from "@hooks";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet, useOutlet } from "react-router-dom";
@@ -9,7 +10,6 @@ import { Outlet, useOutlet } from "react-router-dom";
 const Notes = () => {
     const [filteredNotes, updateFilter] = useState<Note[]>([]);
     const [search, updateSearch] = useState<string>("");
-    const { currentID } = useAccount();
     const { myNotes } = useNote();
     const { t } = useTranslation('translation');
     const inChildRoute = useOutlet();
@@ -23,10 +23,6 @@ const Notes = () => {
         let list: Note[] = [];
         if (search !== "") {
             myNotes.forEach(note => {
-                if (note.owner !== currentID) {
-                    return;
-                }
-
                 let titleLower = note.title ? note.title.toLocaleLowerCase() : ""
                 let contentLower = note.content ? note.content.toLocaleLowerCase() : ""
                 if (titleLower.includes(search) || contentLower.includes(search)) {
@@ -65,11 +61,9 @@ const Notes = () => {
             >
                 {!!filteredNotes.length ? filteredNotes.map(note => <NoteItem key={note.id} {...note} />) :
                     !!search.length &&
-                    <Flex justifyContent="center" boxSize="100%">
-                        <Container w="fit-content">No data</Container>
-                    </Flex>
+                    <NoData type="notesType" />
                 }
-                {!search.length && myNotes.filter(note => note.owner == currentID).map(note => <NoteItem key={note.id} {...note} />)}
+                {!search.length && (!!myNotes.length ? myNotes.map(note => <NoteItem key={note.id} {...note} />) : <NoData type="notesType" />)}
             </SimpleGrid>
             <NewItem to="/notes/new" />
         </Container>

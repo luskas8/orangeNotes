@@ -5,7 +5,7 @@ export const Platform = () => {
     return (
         <Box
             w="100%"
-            h="100vh"
+            minH="100vh"
             bgColor="blackAlpha.900"
         >
             <Router />

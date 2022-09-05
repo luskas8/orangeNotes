@@ -9,5 +9,38 @@
     "level": "Nível",
     "start_counter": "Iniciar contador",
     "abandon_counter": "Encerrar contador",
-    "end_time": "Tempo acabou"
+    "end_time": "Tempo acabou",
+    "home_input_label": "Que tal explorar ainda mais o aplicativo? Coloque como se chama e fazemos a mágica",
+    "home_input_placeholder": "Nome de usuário",
+    "ready": "Pronto",
+    "logout": "Deslogar",
+    "congratulations": "Parabéns",
+    "new_level": "Você alcançou um novo nível.",
+    "required": "Campo obrigatório",
+    "notFound": "Usruário não encontrado",
+    "howToUse": "Como usar",
+    "homepage": "Página inicial",
+    "homepage_about": "Onde você está, aqui pode entender melhor o funcionamento do aplicativo e ter algumas configuraões da conta",
+    "pomodoro": "Relógio de Pomodoro",
+    "pomodoro_about_1": "Um relógio para te ajudar a focar em suas atividades do dia a dia",
+    "pomodoro_about_2": "Que tal dar uma olhada, e quem sabe não se interesse em ter uma conta conosco",
+    "notes": "Bloco de notas",
+    "notes_about": "Que tal organizar suas ideias e anotações em bloquinhos para não se esquecer ou então anotar aquela receita",
+    "tasks": "Lista de tarefas",
+    "tasks_about_1": "Organização de ideias legal, mas aqui que tal fazer aquela famosa lista de afazeres?",
+    "tasks_about_2": {
+        "one": "Colocar aquelas metas para ter a satisfação de cumprir e marcar como",
+        "two": "FEITO!",
+        "three": "; as tarefas da escola, trabalho ou faculdade"
+    },
+    "tasks_about_3": {
+        "one": "então é",
+        "two": "#AquiMesmo!"
+    },
+    "save": "Será que está salvo?",
+    "save_about": "Salvamos conforme você vai digirando (isso mesmo, em tempo real), então sim está ficando salvo",
+    "need_account": "Necessário ter uma conta conosco",
+    "noData": "Ops, parece que você não tem {{type}} criado ainda",
+    "notesType": "notas",
+    "tasksType": "taretas"
 }
