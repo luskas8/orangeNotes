@@ -36,10 +36,10 @@ export const EditNote = () => {
         localStorage.setItem("orange-note_local-note-id", data.id);
     }
 
-    function converter(): Note | FormProps {
+    function converter(): Note {
         let data: any = formRef.current?.getData();
 
-        return { id: currentID, title: data.title, content: data.content };
+        return { id: currentID, title: data.title, content: data.content, owner: data.owner };
     }
 
     function needsUpdate(data: Note) {
@@ -67,7 +67,7 @@ export const EditNote = () => {
         updateTimeoutID(tempTimeoutID);
     }
 
-    async function saveData(data: FormProps) {
+    async function saveData(data: Note) {
         if (data.title === "" && data.content === "") {
             return;
         }

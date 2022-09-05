@@ -16,6 +16,7 @@ interface FormProps {
     completed: boolean;
     content: string;
     timestamp?: number | string;
+    owner: string;
 }
 
 export const TaskItem = (task: Task) => {

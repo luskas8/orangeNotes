@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { loadEnv } from 'vite';
+import { loadEnv, splitVendorChunkPlugin } from 'vite';
 import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from 'vitest/config';
 
@@ -8,7 +8,7 @@ export default ({ mode }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
     return defineConfig({
-        plugins: [react(), tsconfigPaths({ root: "../" })],
+        plugins: [react(), splitVendorChunkPlugin(), tsconfigPaths({ root: "../" })],
         root: 'src',
         build: {
             outDir: '../dist',
@@ -26,5 +26,6 @@ export default ({ mode }) => {
                 usePolling: true,
             },
         },
+        publicDir: "public"
     });
 }

@@ -1,4 +1,4 @@
-import { Home, EditNote, NewNote, NotePage, Pomodoro, Tasks } from "@pages";
+import { Home, EditNote, NewNote, NotePage, Pomodoro, TaskPage } from "@pages";
 import { NavItensProps } from "@types";
 import { CgCheckR, CgSandClock } from "react-icons/cg";
 import { FaGlobeAmericas, FaRegStickyNote } from "react-icons/fa";
@@ -46,7 +46,7 @@ export const routes: NavItensProps[] = [
     },
     {
         path: "/tasks",
-        component: () => <Tasks />,
+        component: () => <TaskPage />,
         itemLabel: "tasks",
         icon: <CgCheckR />,
         authorization: "user",

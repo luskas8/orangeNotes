@@ -8,12 +8,13 @@ const tasksConverter = {
             completed: task.completed,
             content: task.content,
             timestamp: task.timestamp,
+            owner: task.owner,
         }
     },
     fromFirestore: (snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Task => {
         const data = snapshot.data(options);
         data.timestamp = moment(data.timestamp.toMillis()).format("L");
-        return { completed: data.completed, content: data.content, id: snapshot.id, timestamp: data.timestamp };
+        return { completed: data.completed, content: data.content, id: snapshot.id, timestamp: data.timestamp, owner: data.owner, };
     }
 }
 
