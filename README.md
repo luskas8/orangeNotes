@@ -9,6 +9,7 @@ Uma plataforma onde as pessoas podem organizar suas ideias, atividades pendentes
 ## Onde posso encontrar o __Orange Notes__?
 
 Você pode acessa-lo <a href="https://orange-notes-six.vercel.app/" target="_blank">clicando aqui</a>
+Você pode deve perceber que um relógio de pomodoro geralmente é de 25 minutos, mas para a finalidade de testes colocamos para 3 segundos
 
 ## 💻 Tecnologias
 
