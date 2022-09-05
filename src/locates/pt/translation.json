@@ -39,5 +39,8 @@
     },
     "save": "Será que está salvo?",
     "save_about": "Salvamos conforme você vai digirando (isso mesmo, em tempo real), então sim está ficando salvo",
-    "need_account": "Necessário ter uma conta conosco"
+    "need_account": "Necessário ter uma conta conosco",
+    "noData": "Ops, parece que você não tem {{type}} criado ainda",
+    "notesType": "notas",
+    "tasksType": "taretas"
 }

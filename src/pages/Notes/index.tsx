@@ -1,5 +1,6 @@
 import { Container, Flex, SimpleGrid } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
+import { NoData } from "@components/NoData";
 import { Note, NoteProvider } from "@contexts";
 import { useAccount, useNote, useTask } from "@hooks";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -65,11 +66,9 @@ const Notes = () => {
             >
                 {!!filteredNotes.length ? filteredNotes.map(note => <NoteItem key={note.id} {...note} />) :
                     !!search.length &&
-                    <Flex justifyContent="center" boxSize="100%">
-                        <Container w="fit-content">No data</Container>
-                    </Flex>
+                    <NoData type="notesType" />
                 }
-                {!search.length && myNotes.filter(note => note.owner == currentID).map(note => <NoteItem key={note.id} {...note} />)}
+                {!search.length && (!!myNotes.length ? myNotes.filter(note => note.owner == currentID).map(note => <NoteItem key={note.id} {...note} />) : <NoData type="notesType" />)}
             </SimpleGrid>
             <NewItem to="/notes/new" />
         </Container>

@@ -39,5 +39,8 @@
     },
     "save": "¿Está salvado?",
     "save_about": "Guardamos a medida que escribe (así es, en tiempo real), así que sí, se está guardando",
-    "need_account": "Necesita tener una cuenta con nosotros"
+    "need_account": "Necesita tener una cuenta con nosotros",
+    "noData": "Ups, parece que no lo has hecho {{type}} creado todavía",
+    "notesType": "notas",
+    "tasksType": "tareas"
 }

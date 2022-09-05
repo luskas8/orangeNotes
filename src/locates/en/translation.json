@@ -39,5 +39,8 @@
     },
     "save": "Is it saved?",
     "save_about": "We save as you type (that's right, in real time), so yes it's getting saved",
-    "need_account": "Need to have an account with us"
+    "need_account": "Need to have an account with us",
+    "noData": "Opps, looks like you have no {{type}} created yet",
+    "notesType": "notes",
+    "tasksType": "tasks"
 }

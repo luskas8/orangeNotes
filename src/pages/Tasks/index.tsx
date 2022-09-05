@@ -1,5 +1,6 @@
 import { Container, Flex, Grid } from "@chakra-ui/react";
 import { NewItem, Search } from "@components";
+import { NoData } from "@components/NoData";
 import { TaskItem } from "@components/TaskItem";
 import { Task, TaskProvider } from "@contexts";
 import { useAccount, useNote, useTask } from "@hooks";
@@ -52,11 +53,9 @@ const Tasks = () => {
             <Grid padding="0 8px" color={"white"}>
                 {!!filteredNotes.length ? filteredNotes.map(note => <TaskItem key={note.id} {...note} />) :
                     !!search.length &&
-                    <Flex justifyContent="center" boxSize="100%">
-                        <Container w="fit-content">No data</Container>
-                    </Flex>
+                    <NoData type="tasksType" />
                 }
-                {!search.length && myTasks.filter(task => task.owner == currentID).map((task) => <TaskItem key={task.id} {...task} />)}
+                {!search.length && (!!myTasks.length ? myTasks.filter(task => task.owner == currentID).map((task) => <TaskItem key={task.id} {...task} />) : <NoData type="tasksType" />)}
             </Grid>
             <NewItem.Task />
         </Container>
