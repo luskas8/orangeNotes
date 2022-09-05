@@ -82,7 +82,7 @@ export interface Note {
     title: string;
     content: string;
     timestamp?: number | string;
-    owner: string;
+    owner?: string;
 }
 interface NoteContext {
     myNotes: Note[];
