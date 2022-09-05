@@ -66,7 +66,7 @@ export function Input({ name, type, label, value, ...rest }: InputProps) {
                 {...rest}
             />
 
-            {error && <Box as="span">{error}</Box>}
+            {error && <Box as="span" fontSize="small" color="red.500">{error}</Box>}
         </Box>
     )
 }

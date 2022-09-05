@@ -9,5 +9,35 @@
     "level": "Nivel",
     "start_counter": "Contador de inicio",
     "abandon_counter": "Contador de inicio",
-    "end_time": "El tiempo se acabo"
+    "end_time": "El tiempo se acabo",
+    "home_input_label": "¿Qué tal explorar más la aplicación? Ponle como se llama y haremos la magia",
+    "home_input_placeholder": "Nombre de usuario",
+    "ready": "Listo",
+    "logout": "Cerrar sesión",
+    "congratulations": "Felicidades",
+    "new_level": "Has alcanzado un nuevo nivel.",
+    "required": "Campo requerido",
+    "notFound": "Usuario no encontrado",
+    "howToUse": "Cómo usar",
+    "homepage": "Inicio",
+    "homepage_about": "Donde estés, aquí puedes entender mejor cómo funciona la aplicación y tener algunas configuraciones de cuenta",
+    "pomodoro": "Reloj Pomodoro",
+    "pomodoro_about_1": "Un reloj para ayudarte a concentrarte en tus actividades diarias",
+    "pomodoro_about_2": "¿Qué tal si echas un vistazo y tal vez no te interese tener una cuenta con nosotros?",
+    "notes": "Bloc de notas",
+    "notes_about": "¿Qué tal organizar tus ideas y notas en bloques para que no te olvides o anotes esa receta?",
+    "tasks": "Lista de tareas pendientes",
+    "tasks_about_1": "Buena organización de ideas, pero aquí, ¿qué tal hacer esa famosa lista de tareas pendientes?",
+    "tasks_about_2": {
+        "one": "Pon esas metas para tener la satisfacción de cumplirlas y márcalas como",
+        "two": "HECHO!",
+        "three": "; tareas de la escuela, el trabajo o la universidad"
+    },
+    "tasks_about_3": {
+        "one": "así que esto es ",
+        "two": "#JustoAquí!"
+    },
+    "save": "¿Está salvado?",
+    "save_about": "Guardamos a medida que escribe (así es, en tiempo real), así que sí, se está guardando",
+    "need_account": "Necesita tener una cuenta con nosotros"
 }

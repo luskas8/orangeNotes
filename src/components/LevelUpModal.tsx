@@ -3,8 +3,10 @@ import { useContext } from 'react'
 import { ChallengersContext } from '@contexts/challengers'
 import styles from '../styles/components/LevelUpModal.module.css'
 import { Modal, ModalContent, ModalOverlay } from '@chakra-ui/react'
+import { useTranslation } from 'react-i18next';
 
 export function LevelUpModal() {
+    const { t } = useTranslation("translation");
     const { level, closeLevelUpModal } = useContext(ChallengersContext)
 
     return (
@@ -14,8 +16,8 @@ export function LevelUpModal() {
                 <div className={styles.container}>
                     <header>{level}</header>
 
-                    <strong>Parabéns</strong>
-                    <p>Você alcansou um novo level.</p>
+                    <strong>{t('congratulations')}</strong>
+                    <p>{t('new_level')}</p>
 
                     <button type="button" onClick={closeLevelUpModal}>
                         <img src="assets/icons/close.svg" alt="Fechar modal" />

@@ -9,5 +9,35 @@
     "level": "Level",
     "start_counter": "Start counter",
     "abandon_counter": "Close counter",
-    "end_time": "Time is over"
+    "end_time": "Time is over",
+    "home_input_label": "How about exploring the app further? Put it what it's called and we'll do the magic",
+    "home_input_placeholder": "Username",
+    "ready": "Ready",
+    "logout": "Logout",
+    "congratulations": "Congratulations",
+    "new_level": "You've reached a new level.",
+    "required": "Field required",
+    "notFound": "User not found",
+    "howToUse": "How to use",
+    "homepage": "Home",
+    "homepage_about": "Where you are, here you can better understand how the application works and have some account settings",
+    "pomodoro": "Pomodoro timer",
+    "pomodoro_about_1": "A watch to help you focus on your everyday activities",
+    "pomodoro_about_2": "How about taking a look, and maybe not be interested in having an account with us",
+    "notes": "Notepad",
+    "notes_about": "How about organizing your ideas and notes in blocks so you don't forget or write down that recipe",
+    "tasks": "To-do list",
+    "tasks_about_1": "Nice organization of ideas, but here how about making that famous to-do list?",
+    "tasks_about_2": {
+        "one": "Put those goals to have the satisfaction of fulfilling and mark them as",
+        "two": "DONE!",
+        "three": "; school, work or college assignments"
+    },
+    "tasks_about_3": {
+        "one": "so this is",
+        "two": "#RightHere!"
+    },
+    "save": "Is it saved?",
+    "save_about": "We save as you type (that's right, in real time), so yes it's getting saved",
+    "need_account": "Need to have an account with us"
 }
