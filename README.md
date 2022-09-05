@@ -8,7 +8,7 @@ Uma plataforma onde as pessoas podem organizar suas ideias, atividades pendentes
 
 ## Onde posso encontrar o __Orange Notes__?
 
-Você pode acessalo <a href="http://orange-notes-six.vercel.app/" targetk="_blank"></a>
+Você pode acessa-lo <a href="https://orange-notes-six.vercel.app/" target="_blank">clicando aqui</a>
 
 ## 💻 Tecnologias
 
