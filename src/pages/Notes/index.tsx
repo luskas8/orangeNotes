@@ -1,7 +1,7 @@
 import { Container, Flex, SimpleGrid } from "@chakra-ui/react";
 import { NewItem, NoteItem, Search } from "@components";
 import { Note, NoteProvider } from "@contexts";
-import { useAccount, useNote } from "@hooks";
+import { useAccount, useNote, useTask } from "@hooks";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet, useOutlet } from "react-router-dom";
@@ -13,6 +13,8 @@ const Notes = () => {
     const { myNotes } = useNote();
     const { t } = useTranslation('translation');
     const inChildRoute = useOutlet();
+    const { taskUnsubscribers } = useTask();
+
     function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
         updateSearch(e.target.value);
     }
@@ -21,6 +23,10 @@ const Notes = () => {
         let list: Note[] = [];
         if (search !== "") {
             myNotes.forEach(note => {
+                if (note.owner !== currentID) {
+                    return;
+                }
+
                 let titleLower = note.title ? note.title.toLocaleLowerCase() : ""
                 let contentLower = note.content ? note.content.toLocaleLowerCase() : ""
                 if (titleLower.includes(search) || contentLower.includes(search)) {
@@ -30,6 +36,12 @@ const Notes = () => {
         }
         updateFilter(list);
     }, [search]);
+
+    useEffect(() => {
+        if (!!taskUnsubscribers) {
+            taskUnsubscribers.forEach(unsubscribe => unsubscribe());
+        }
+    }, [])
 
     if (inChildRoute) {
         return <Outlet />;

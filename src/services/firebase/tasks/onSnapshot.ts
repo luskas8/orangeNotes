@@ -13,7 +13,7 @@ const snapshot = (store: Firestore, updateState: Function) => {
         updateState(data);
     })
 
-    return () => unsubscribe();
+    return unsubscribe
 }
 
 export default snapshot;

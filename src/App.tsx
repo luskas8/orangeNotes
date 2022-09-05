@@ -1,5 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { AccountProvider, BreakpointProvider, FirebaseProvider, LeavingGuardProvider, NavigationProvider } from "@contexts";
+import { AccountProvider, BreakpointProvider, LeavingGuardProvider, NavigationProvider } from "@contexts";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Platform } from "./layouts/Platform";
 import './locates';
@@ -10,15 +10,13 @@ function App() {
         <ChakraProvider theme={theme}>
             <LeavingGuardProvider>
                 <AccountProvider>
-                    <FirebaseProvider>
-                        <BreakpointProvider>
-                            <Router>
-                                <NavigationProvider>
-                                    <Platform />
-                                </NavigationProvider>
-                            </Router>
-                        </BreakpointProvider>
-                    </FirebaseProvider>
+                    <BreakpointProvider>
+                        <Router>
+                            <NavigationProvider>
+                                <Platform />
+                            </NavigationProvider>
+                        </Router>
+                    </BreakpointProvider>
                 </AccountProvider>
             </LeavingGuardProvider>
         </ChakraProvider>

@@ -4,15 +4,6 @@ import snapshotNotes from "@services/firebase/notes/onSnapshot";
 import snapshotTasks from "@services/firebase/tasks/onSnapshot";
 import { Unsubscribe } from "firebase/firestore";
 import { createContext, ReactNode, useEffect, useState } from "react";
-export interface Task {
-    id: string;
-    content: string;
-    completed: boolean;
-    timestamp?: number | string;
-}
-interface TaskContext {
-    tasks: Task[];
-}
 
 interface FirebaseContextProps {
     tasks: Task[];
@@ -49,37 +40,74 @@ export const FirebaseProvider = ({ children }: FirebaseProps) => {
     );
 };
 
+export interface Task {
+    id: string;
+    content: string;
+    completed: boolean;
+    timestamp?: number | string;
+    owner: string;
+}
+interface TaskContext {
+    myTasks: Task[]
+    taskUnsubscribers: Unsubscribe[];
+}
+
+const taskDefaultValue: TaskContext = {
+    myTasks: [],
+    taskUnsubscribers: [],
+}
+
+export const TaskContext = createContext<TaskContext>(taskDefaultValue);
+
+export const TaskProvider = ({ children }: FirebaseProps) => {
+    const [myTasks, updateState] = useState<Task[]>(taskDefaultValue.myTasks);
+    let taskUnsubscribers: Unsubscribe[] = [];
+
+    useEffect(() => {
+        taskUnsubscribers.push(snapshotTasks(firestore, updateState));
+    }, []);
+
+    return <TaskContext.Provider
+        value={{
+            myTasks,
+            taskUnsubscribers,
+        }}
+    >
+        {children}
+    </TaskContext.Provider>
+}
+
 export interface Note {
     id: string;
     title: string;
     content: string;
     timestamp?: number | string;
-    owner?: string;
+    owner: string;
 }
 interface NoteContext {
-    myNotes: Note[]
-    unsubscribers: Unsubscribe[];
+    myNotes: Note[];
+    noteUnsubscribers: Unsubscribe[];
 }
 
 const noteDefaultValue: NoteContext = {
     myNotes: [],
-    unsubscribers: [],
+    noteUnsubscribers: [],
 }
 
 export const NoteContext = createContext<NoteContext>(noteDefaultValue);
 
 export const NoteProvider = ({ children }: FirebaseProps) => {
     const [myNotes, updateState] = useState<Note[]>(noteDefaultValue.myNotes);
-    let unsubscribers: Unsubscribe[] = [];
+    let noteUnsubscribers: Unsubscribe[] = [];
 
     useEffect(() => {
-        unsubscribers.push(snapshotNotes(firestore, updateState));
+        noteUnsubscribers.push(snapshotNotes(firestore, updateState));
     }, []);
 
     return <NoteContext.Provider
         value={{
             myNotes,
-            unsubscribers,
+            noteUnsubscribers,
         }}
     >
         {children}

@@ -1,9 +1,11 @@
 import { ChallengersContext } from '@contexts/challengers'
 import { useAccount } from '@hooks'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import styles from '../styles/components/Profile.module.css'
 
 export function Profile() {
+    const { t } = useTranslation('translation');
     const { level } = useContext(ChallengersContext)
     const { currentAccount } = useAccount();
     return (
@@ -13,7 +15,7 @@ export function Profile() {
                 <strong>{currentAccount.data.username}</strong>
                 <p>
                     <img src="assets/icons/level.svg" alt="Level" />
-                    Level {level}
+                    {t('level')} {level}
                 </p>
             </div>
         </div>

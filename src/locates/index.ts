@@ -21,6 +21,9 @@ export const resources = {
   es: {
     translation: translationES,
   },
+  "es-419": {
+    translation: translationES,
+  },
 } as const;
 
 i18n

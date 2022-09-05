@@ -1,10 +1,11 @@
 // eslint-disable-next-line no-use-before-define
-import React, { createContext, ReactNode, useEffect, useState } from 'react'
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { LevelUpModal } from '@components/LevelUpModal'
 import { useAccount } from '@hooks'
 import updateAccount from '@services/firebase/account/update'
 import { Account } from '@contexts/firebase'
+import { CountdownContext } from '@contexts/countdown'
 
 interface ChallengersProviderProps {
     children: ReactNode
@@ -38,6 +39,7 @@ export const ChallengersContext = createContext({} as ChallengersContextData)
 
 export function ChallengersProvider({ children, ...rest }: ChallengersProviderProps) {
     const { currentAccount } = useAccount();
+    // const { resetCountdown } = useContext(CountdownContext);
     const [level, setLevel] = useState(currentAccount.data.level)
     const [currentExperience, setCurrentExperience] = useState(currentAccount.data.xp)
     const [challengersCompleted, setChallengersCompleted] = useState(currentAccount.data.challengers)
@@ -118,6 +120,7 @@ export function ChallengersProvider({ children, ...rest }: ChallengersProviderPr
         setCurrentExperience(finalExperience)
         setActiveChallenger({ type: "challenger", description: "new challenger", amount: 32 })
         setChallengersCompleted(challengersCompleted + 1)
+        // resetCountdown()
     }
 
     function closeLevelUpModal() {
